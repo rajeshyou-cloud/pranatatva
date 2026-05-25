@@ -260,7 +260,7 @@ export default function DesignDPage() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(290px,1fr))', gap: '1.2rem', marginBottom: '2rem' }}>
             {services.map(s => (
-              <div key={s.name} className="card-d" style={{ borderLeft: `4px solid ${s.accent}`, background: '#3A1A10', border: 'none', borderLeft: `4px solid ${s.accent}` } as React.CSSProperties}>
+              <div key={s.name} className="card-d" style={{ background: '#3A1A10', borderLeft: `4px solid ${s.accent}` } as React.CSSProperties}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                   <span style={{ fontSize: '.64rem', letterSpacing: '.15em', textTransform: 'uppercase', color: s.accent, fontFamily: "'Cinzel',serif" }}>{s.category}</span>
                   <span style={{ fontSize: '.7rem', color: '#8A6050' }}>{s.who}</span>
