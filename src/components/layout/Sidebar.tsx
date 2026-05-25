@@ -20,7 +20,7 @@ export default function Sidebar() {
 
   return (
     <nav
-      className="fixed left-0 top-0 w-[230px] h-screen z-50 flex flex-col overflow-y-auto"
+      className="hidden md:flex fixed left-0 top-0 w-[230px] h-screen z-50 flex-col overflow-y-auto"
       style={{ background: '#2C1A0E', scrollbarWidth: 'none' }}
       aria-label="Main navigation"
     >

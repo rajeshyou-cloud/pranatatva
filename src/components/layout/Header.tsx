@@ -17,8 +17,7 @@ export default function Header({ sidebarVisible = false }: { sidebarVisible?: bo
 
   return (
     <header
-      className="fixed top-[40px] right-0 z-40 h-[62px] bg-brand-charcoal border-b border-white/[0.07] transition-all duration-300"
-      style={{ left: sidebarVisible ? 230 : 0 }}
+      className={`fixed top-[40px] right-0 z-40 h-[62px] bg-brand-charcoal border-b border-white/[0.07] transition-all duration-300 ${sidebarVisible ? 'left-0 md:left-[230px]' : 'left-0'}`}
     >
       <div className="h-full px-6 flex items-center justify-between">
 

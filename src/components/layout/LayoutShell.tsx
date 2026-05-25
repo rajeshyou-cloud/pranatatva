@@ -23,8 +23,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
       {showSidebar && <Sidebar />}
 
       <div
-        className="flex flex-col min-h-screen transition-all duration-300"
-        style={{ marginLeft: showSidebar ? 230 : 0 }}
+        className={`flex flex-col min-h-screen transition-all duration-300 ${showSidebar ? 'md:ml-[230px]' : ''}`}
       >
         <Header sidebarVisible={showSidebar} />
         <main className="flex-1 pt-[102px]">{children}</main>
