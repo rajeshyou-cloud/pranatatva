@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-dm-sans: 'DM Sans', system-ui, sans-serif;
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --color-amber: #C4780A;
+  --color-amber-dark: #A86008;
+  --color-espresso: #2C1A0E;
+  --color-parchment: #FBF7F0;
+  --color-pagebg: #F5EFE4;
+  --color-body: #5C3D28;
+  --color-heading: #1A0E06;
+  --color-muted: #9C7A60;
+  --color-border: #E8D9C4;
+}
+
+@layer base {
+  body {
+    background-color: #FBF7F0;
+    color: #5C3D28;
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-playfair), Georgia, serif;
+    color: #1A0E06;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full
+           font-medium text-sm transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-offset-2;
+    background-color: #C4780A;
+    color: white;
+    --tw-ring-color: #C4780A;
+  }
+  .btn-primary:hover {
+    background-color: #A86008;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full
+           font-medium text-sm transition-colors duration-200
+           focus:outline-none focus:ring-2 focus:ring-offset-2;
+    border: 1.5px solid #C4A880;
+    color: #5C3D28;
+    background: transparent;
+    --tw-ring-color: #C4780A;
+  }
+  .btn-secondary:hover {
+    border-color: #C4780A;
+    color: #C4780A;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-6 py-3 rounded-full
+           font-medium text-sm transition-colors duration-200;
+    background-color: #C4780A;
+    color: white;
+  }
+  .btn-gold:hover {
+    background-color: #A86008;
+  }
+
+  .card {
+    @apply bg-white rounded-2xl shadow-sm p-6;
+    border: 1px solid #E8D9C4;
+  }
+
+  .section-title {
+    @apply text-4xl md:text-5xl font-display font-medium leading-tight;
+    color: #1A0E06;
+  }
+
+  .section-subtitle {
+    @apply text-sm leading-relaxed mt-3;
+    color: #5C3D28;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 rounded-xl transition-colors duration-200 outline-none;
+    background-color: #F5EFE4;
+    border: 1px solid #E8D9C4;
+    color: #1A0E06;
+  }
+  .input-field:focus {
+    border-color: #C4780A;
+    background-color: white;
+  }
+  .input-field::placeholder {
+    color: #9C7A60;
+  }
+
+  .label {
+    @apply block text-[11px] font-medium uppercase tracking-wide mb-1.5;
+    color: #9C7A60;
+  }
+
+  .eyebrow {
+    @apply block text-[11px] font-medium uppercase tracking-[2.5px] mb-2;
+    color: #C4780A;
+  }
+}
