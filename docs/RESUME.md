@@ -1,6 +1,6 @@
 # PranaTatva — Session Resume Notes
 
-**Last updated:** 2026-05-25
+**Last updated:** 2026-05-26
 
 ---
 
@@ -41,7 +41,32 @@ A full UI redesign of the PranaTatva spiritual wellness portal to match the refe
 
 ---
 
-## Session 2 — 2026-05-25 (Today)
+## Session 3 — 2026-05-26 (Today)
+
+### Completed this session
+
+| Task | File(s) | Notes |
+|---|---|---|
+| QA bug fixes — homepage service 404s | `src/app/page.tsx` | Fixed 3 wrong service card slugs: akashic-readings→akashic-records-soul-reading, tarot-reading→tarot-card-reading, theta-healing→theta-healing-deep-dive |
+| QA bug fix — "0 minutes" display | `src/app/services/[slug]/page.tsx`, `StepReview.tsx` | `duration === 0` means 8-week program; shows "8-week program" instead of "0 min" |
+| QA bug fix — AI recommender banner link | `src/app/services/page.tsx` | `/ai-recommender` (404) → `/contact` |
+| `formatINR(0)` fix | `src/lib/utils.ts` | Returns `'Free'` for 0 paise (was showing ₹0) |
+| Static slot API (demo mode) | `src/app/api/slots/route.ts` | Full rewrite: Hemavathi Mon/Wed/Fri/Sat, Shruthi Sun/Tue/Thu/Sat, deterministic booked slots via hash |
+| Booking create API (demo mode) | `src/app/api/bookings/create/route.ts` | Returns `{demo:true, bookingRef, orderId:'demo'}` when no Razorpay/Supabase env vars; free bookings skip Razorpay |
+| Payment verify API (demo mode) | `src/app/api/payments/verify/route.ts` | Passes through with `{success:true}` when no credentials configured |
+| StepPayment — 3 payment paths | `src/components/booking/StepPayment.tsx` | Handles: Free booking (green CTA), Demo mode (skips Razorpay), Real Razorpay (signature verify) |
+| Service info panel in booking flow | `src/components/booking/BookingFlow.tsx` | Added `ServiceInfoCard` sticky panel on steps 2-5, `lg:grid lg:grid-cols-[1fr_280px]` two-column layout; panel hidden on mobile |
+| Booking page container widened | `src/app/book/page.tsx` | `max-w-5xl` → `max-w-6xl` for two-column layout |
+
+### Key decisions made
+- **Demo mode pattern:** All 3 booking APIs check for missing env vars at runtime; fall back to mock data. No code changes needed when real credentials are added.
+- **Booking ref format:** `PT-{base36timestamp}-{rand}` (e.g. `PT-lx2p4k-3f`)
+- **Service info panel:** reads from the same `services` array in `StepServiceSelect.tsx` — single source of truth
+- **Free booking flow:** `pricePaise === 0` → green confirm button → skips Razorpay entirely, uses `orderId: 'free'` path
+
+---
+
+## Session 2 — 2026-05-25
 
 ### Completed this session
 
@@ -74,11 +99,13 @@ npx next dev
 ```
 → http://localhost:3000
 
-**Working pages:** `/` homepage, `/services`, `/about`, `/contact`, `/services/[slug]`, `/book`, `/admin/login`
+**Working pages:** `/` homepage, `/services`, `/about`, `/contact`, `/services/[slug]`, `/book`, `/admin/login`, `/booking/confirmation`
 
 **Mobile tested:** Home, Services page (sidebar fix deployed and confirmed)
 
-**Not working yet:** Slot picker shows "No slots available" — needs Supabase connected.
+**Booking flow status:** Fully working end-to-end in demo mode (no credentials needed). Service info panel visible on desktop (steps 2–5). Static slots generate from hardcoded schedule. Free Discovery Call skips payment entirely.
+
+**Not working yet:** Real Razorpay checkout, WhatsApp notifications, Zoom meeting links — all blocked on credentials.
 
 ---
 
@@ -96,14 +123,16 @@ npx next dev
 - [ ] Real contact number for Contact page
 - [ ] WhatsApp Business number for click-to-chat links
 
-### Backend (entirely unbuilt)
+### Backend (partially built — demo mode only)
+- [x] Slot API — static schedule (demo); needs real Supabase slots table
+- [x] Booking create API — demo mode returns mock ref; needs real Supabase + Razorpay
+- [x] Payment verify API — passthrough in demo; needs real Razorpay signature check
 - [ ] Auth (Supabase email OTP + Google SSO)
-- [ ] Booking API + slot availability
-- [ ] Razorpay payment integration
+- [ ] Confirmation page `/booking/confirmation` — needs to exist and show booking ref
 - [ ] WhatsApp notifications (Meta Cloud API)
 - [ ] Zoom meeting auto-link on booking
 - [ ] Admin dashboard (real data)
-- [ ] Email via Resend
+- [ ] Email via Resend (file exists but untested)
 
 ---
 

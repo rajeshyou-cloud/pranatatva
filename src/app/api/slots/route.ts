@@ -61,10 +61,22 @@ export async function GET(req: NextRequest) {
   try {
     const { createAdminSupabase } = await import('@/lib/supabase/admin')
     const supabase = createAdminSupabase()
+
+    // practitioner_id param is the slug ('hema'/'shru') — resolve to UUID
+    const { data: prac, error: pracErr } = await supabase
+      .from('practitioners')
+      .select('id')
+      .eq('slug', practitioner_id)
+      .single()
+
+    if (pracErr || !prac) {
+      return NextResponse.json({ slots: staticSlots(practitioner_id, date) })
+    }
+
     const { data: slots, error } = await supabase
       .from('availability_slots')
       .select('id, start_time, end_time, is_available')
-      .eq('practitioner_id', practitioner_id)
+      .eq('practitioner_id', prac.id)
       .eq('date', date)
       .order('start_time')
 

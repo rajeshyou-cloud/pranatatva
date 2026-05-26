@@ -29,7 +29,17 @@ export async function POST(req: NextRequest) {
       .from('bookings')
       .update({ status: 'confirmed', payment_status: 'paid', payment_id: razorpay_payment_id })
       .eq('booking_ref', bookingRef)
-      .select('id, booking_ref, client_name, client_email, client_phone, amount_paise')
+      .select(`
+        id,
+        booking_ref,
+        client_name,
+        client_email,
+        client_phone,
+        amount_paise,
+        services ( name ),
+        practitioners ( name, zoom_link ),
+        availability_slots ( slot_date, slot_time )
+      `)
       .single()
 
     if (error || !booking) {
@@ -48,8 +58,22 @@ export async function POST(req: NextRequest) {
     // Fire-and-forget emails
     import('@/lib/email')
       .then(({ sendBookingConfirmationEmail, sendPractitionerAlertEmail }) => {
-        sendBookingConfirmationEmail(booking as never).catch(console.error)
-        sendPractitionerAlertEmail(booking as never).catch(console.error)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const b = booking as any
+        const emailRecord = {
+          booking_ref: booking.booking_ref,
+          client_name: booking.client_name,
+          client_email: booking.client_email,
+          client_phone: booking.client_phone,
+          amount_paise: booking.amount_paise,
+          service_name: b.services?.name ?? 'Session',
+          practitioner_name: b.practitioners?.name ?? 'Practitioner',
+          slot_date: b.availability_slots?.slot_date ?? undefined,
+          slot_time: b.availability_slots?.slot_time ?? undefined,
+          zoom_link: b.practitioners?.zoom_link ?? null,
+        }
+        sendBookingConfirmationEmail(emailRecord).catch(console.error)
+        sendPractitionerAlertEmail(emailRecord).catch(console.error)
       })
       .catch(console.error)
 

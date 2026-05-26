@@ -35,6 +35,16 @@ export async function POST(req: NextRequest) {
 
     const supabase = createAdminSupabase()
 
+    // Resolve slugs to UUIDs
+    const [{ data: service }, { data: practitioner }] = await Promise.all([
+      supabase.from('services').select('id').eq('slug', body.serviceSlug).single(),
+      supabase.from('practitioners').select('id').eq('slug', body.practitionerId).single(),
+    ])
+
+    if (!service || !practitioner) {
+      return NextResponse.json({ error: 'Service or practitioner not found.' }, { status: 404 })
+    }
+
     // Lock the slot
     const { error: slotErr } = await supabase
       .from('availability_slots')
@@ -53,8 +63,8 @@ export async function POST(req: NextRequest) {
     const { data: booking, error: bookingErr } = await supabase
       .from('bookings')
       .insert({
-        service_id: body.serviceSlug,
-        practitioner_id: body.practitionerId,
+        service_id: service.id,
+        practitioner_id: practitioner.id,
         slot_id: body.slotId,
         client_name: body.clientName,
         client_email: body.clientEmail,
@@ -74,12 +84,31 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Could not create booking.' }, { status: 500 })
     }
 
-    // Free bookings skip Razorpay
+    // Free bookings skip Razorpay — confirm immediately and send emails
     if (body.pricePaise === 0) {
       await supabase
         .from('bookings')
         .update({ status: 'confirmed' })
         .eq('booking_ref', booking.booking_ref)
+
+      import('@/lib/email')
+        .then(({ sendBookingConfirmationEmail, sendPractitionerAlertEmail }) => {
+          const emailRecord = {
+            booking_ref: booking.booking_ref,
+            client_name: body.clientName,
+            client_email: body.clientEmail,
+            client_phone: body.clientPhone,
+            amount_paise: 0,
+            service_name: body.serviceName,
+            practitioner_name: body.practitionerName,
+            slot_date: body.slotDate,
+            slot_time: body.slotTime,
+            zoom_link: null,
+          }
+          sendBookingConfirmationEmail(emailRecord).catch(console.error)
+          sendPractitionerAlertEmail(emailRecord).catch(console.error)
+        })
+        .catch(console.error)
 
       return NextResponse.json({ bookingRef: booking.booking_ref, orderId: 'free', keyId: null })
     }
