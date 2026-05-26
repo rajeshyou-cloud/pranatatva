@@ -25,7 +25,7 @@ export default function StepReview({ data, onNext, onBack }: Props) {
           </div>
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4 text-brand-violet" />
-            {formatTime(data.slotTime)} • {data.duration} min
+            {formatTime(data.slotTime)} • {data.duration === 0 ? '8-week program' : `${data.duration} min`}
           </div>
           <div className="flex items-center gap-2">
             <User className="w-4 h-4 text-brand-violet" />

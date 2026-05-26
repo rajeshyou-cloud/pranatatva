@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Loader2, Shield, Lock } from 'lucide-react'
+import { Loader2, Shield, Lock, CheckCircle2 } from 'lucide-react'
 import { formatINR } from '@/lib/utils'
 import type { BookingData } from './BookingFlow'
 
@@ -22,32 +22,45 @@ export default function StepPayment({ data }: Props) {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const isFree = data.pricePaise === 0
+
   async function handlePayment() {
     setLoading(true)
     setError(null)
 
     try {
-      // 1. Create booking + Razorpay order
+      // Step 1: Create booking (+ Razorpay order in production)
       const res = await fetch('/api/bookings/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       })
-      const { orderId, bookingRef, keyId } = await res.json()
-      if (!orderId) throw new Error('Could not create order.')
 
-      // 2. Load Razorpay SDK if not already loaded
+      if (!res.ok) {
+        const { error: msg } = await res.json().catch(() => ({}))
+        throw new Error(msg || 'Could not create booking. Please try again.')
+      }
+
+      const { orderId, bookingRef, keyId, demo } = await res.json()
+
+      // Demo mode or free booking — skip Razorpay
+      if (demo || isFree || !keyId || orderId === 'demo' || orderId === 'free') {
+        router.push(`/booking/confirmation?ref=${bookingRef}`)
+        return
+      }
+
+      // Step 2: Load Razorpay SDK
       if (!window.Razorpay) {
         await new Promise<void>((resolve, reject) => {
           const script = document.createElement('script')
           script.src = 'https://checkout.razorpay.com/v1/checkout.js'
           script.onload = () => resolve()
-          script.onerror = () => reject(new Error('Razorpay SDK failed to load'))
+          script.onerror = () => reject(new Error('Razorpay SDK failed to load.'))
           document.head.appendChild(script)
         })
       }
 
-      // 3. Open Razorpay checkout
+      // Step 3: Open Razorpay checkout
       const rzp = new window.Razorpay({
         key: keyId,
         amount: data.pricePaise,
@@ -61,8 +74,12 @@ export default function StepPayment({ data }: Props) {
           contact: data.clientPhone,
         },
         theme: { color: '#C4780A' },
-        handler: async (response: { razorpay_payment_id: string; razorpay_order_id: string; razorpay_signature: string }) => {
-          // 4. Verify payment on server
+        handler: async (response: {
+          razorpay_payment_id: string
+          razorpay_order_id: string
+          razorpay_signature: string
+        }) => {
+          // Step 4: Verify payment on server
           const verifyRes = await fetch('/api/payments/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -87,43 +104,77 @@ export default function StepPayment({ data }: Props) {
   }
 
   return (
-    <div className="card max-w-md mx-auto text-center space-y-6">
-      <div className="w-16 h-16 rounded-full bg-brand-violet/10 flex items-center justify-center mx-auto">
-        <Lock className="w-7 h-7 text-brand-violet" />
+    <div className="max-w-md mx-auto text-center space-y-6">
+      {/* Icon */}
+      <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto"
+        style={{ background: 'rgba(196,120,10,0.1)' }}>
+        {isFree
+          ? <CheckCircle2 style={{ width: 28, height: 28, color: '#3D6B4F' }} />
+          : <Lock style={{ width: 28, height: 28, color: '#C4780A' }} />
+        }
       </div>
 
       <div>
-        <h2 className="font-display text-2xl font-semibold text-brand-violet">Secure Payment</h2>
-        <p className="text-gray-500 text-sm mt-1">Complete your booking for <strong>{data.serviceName}</strong></p>
+        <h2 className="font-display text-2xl font-semibold" style={{ color: '#1A0C04' }}>
+          {isFree ? 'Confirm Your Free Session' : 'Secure Payment'}
+        </h2>
+        <p className="text-sm mt-1" style={{ color: '#7A5540' }}>
+          {isFree
+            ? 'No payment needed — confirm to secure your slot.'
+            : <>Complete your booking for <strong>{data.serviceName}</strong></>
+          }
+        </p>
       </div>
 
-      <div className="rounded-xl bg-brand-violet/5 p-5">
-        <p className="text-sm text-gray-500">Total Amount</p>
-        <p className="text-4xl font-bold text-brand-violet mt-1">{formatINR(data.pricePaise)}</p>
-        <p className="text-xs text-gray-400 mt-1">Incl. GST</p>
+      {/* Amount box */}
+      <div className="rounded-2xl p-5" style={{ background: 'rgba(196,120,10,0.06)', border: '1px solid rgba(196,120,10,0.15)' }}>
+        <p className="text-sm mb-1" style={{ color: '#9C7A60' }}>
+          {isFree ? 'Session cost' : 'Total amount'}
+        </p>
+        <p className="font-display text-4xl font-bold" style={{ color: '#C4780A' }}>
+          {isFree ? 'Free' : formatINR(data.pricePaise)}
+        </p>
+        {!isFree && <p className="text-xs mt-1" style={{ color: '#9C7A60' }}>Incl. GST</p>}
       </div>
 
-      <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
-        <Shield className="w-4 h-4 text-brand-sage" />
-        Secured by Razorpay — UPI, Cards, Net Banking, Wallets accepted
+      {/* Trust badge */}
+      <div className="flex items-center justify-center gap-2 text-xs" style={{ color: '#9C7A60' }}>
+        <Shield style={{ width: 14, height: 14, color: '#5A8A6A' }} />
+        {isFree
+          ? 'Your booking is held for 24 hours — no card required.'
+          : 'Secured by Razorpay — UPI, Cards, Net Banking, Wallets'
+        }
       </div>
 
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+      {error && (
+        <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-3">
+          {error}
+        </p>
+      )}
 
       <button
         onClick={handlePayment}
         disabled={loading}
-        className="btn-gold w-full text-base py-4 disabled:opacity-60"
+        className="w-full py-4 rounded-full text-base font-semibold transition-colors disabled:opacity-60"
+        style={{ background: isFree ? '#3D6B4F' : '#D4AD25', color: isFree ? 'white' : '#1A0C04' }}
       >
         {loading ? (
-          <><Loader2 className="w-5 h-5 animate-spin mr-2" /> Opening Payment…</>
+          <span className="flex items-center justify-center gap-2">
+            <Loader2 style={{ width: 18, height: 18 }} className="animate-spin" />
+            {isFree ? 'Confirming…' : 'Opening Payment…'}
+          </span>
+        ) : isFree ? (
+          'Confirm Free Booking'
         ) : (
           `Pay ${formatINR(data.pricePaise)}`
         )}
       </button>
 
-      <p className="text-xs text-gray-400">
-        A GST-compliant invoice will be emailed to {data.clientEmail} after payment.
+      <p className="text-xs" style={{ color: '#9C7A60' }}>
+        {isFree
+          ? `A confirmation will be sent to ${data.clientEmail}`
+          : `A GST-compliant invoice will be emailed to ${data.clientEmail} after payment.`
+        }
       </p>
     </div>
   )
