@@ -60,7 +60,6 @@ export default function StepReview({ data, onNext, onBack }: Props) {
         <Shield className="w-4 h-4 text-brand-sage flex-shrink-0 mt-0.5" />
         <span>
           Your intake consent has been recorded with the current timestamp as required by DPDP Act 2023.
-          {data.whatsappOptIn && ' WhatsApp reminders opted in.'}
         </span>
       </div>
 
@@ -73,7 +72,7 @@ export default function StepReview({ data, onNext, onBack }: Props) {
         </div>
         <div className="text-right text-xs text-gray-400">
           <p>Session video link sent</p>
-          <p>via email + WhatsApp</p>
+          <p>via email</p>
         </div>
       </div>
 

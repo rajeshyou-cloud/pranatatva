@@ -1,19 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-interface Slot {
-  id: string
-  start_time: string
-  end_time: string
-  is_available: boolean
-}
-
+// ── Demo mode only (no Supabase URL configured) ───────────────
 // Hemavathi: Mon/Wed/Fri/Sat  |  Shruthi: Tue/Thu/Sat/Sun
-// 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat
 const SCHEDULE: Record<string, number[]> = {
   hema: [1, 3, 5, 6],
   shru: [0, 2, 4, 6],
 }
-
 const TIMES = ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
 
 function endTime(start: string): string {
@@ -22,25 +14,24 @@ function endTime(start: string): string {
   return `${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}`
 }
 
-// Deterministic "already booked" slots — looks realistic without a DB
 function isBookedForDate(dateStr: string, time: string): boolean {
   const hash = [...(dateStr + time)].reduce((acc, c) => acc + c.charCodeAt(0), 0)
-  return hash % 7 === 0  // ~1 in 7 slots looks booked
+  return hash % 7 === 0
 }
 
-function staticSlots(practitionerId: string, dateStr: string): Slot[] {
+function staticSlots(practitionerId: string, dateStr: string) {
   const date = new Date(dateStr)
-  const dayOfWeek = date.getUTCDay() // use UTC to avoid timezone flipping the day
-
+  const dayOfWeek = date.getUTCDay()
   const workDays = SCHEDULE[practitionerId] ?? SCHEDULE['hema']
   if (!workDays.includes(dayOfWeek)) return []
-
-  return TIMES.map((t, i) => ({
-    id: `${practitionerId}-${dateStr}-${i}`,
-    start_time: t,
-    end_time: endTime(t),
-    is_available: !isBookedForDate(dateStr, t),
-  }))
+  return TIMES
+    .filter(t => !isBookedForDate(dateStr, t))
+    .map((t, i) => ({
+      id: `${practitionerId}-${dateStr}-${i}`,
+      start_time: t,
+      end_time: endTime(t),
+      is_available: true,
+    }))
 }
 
 export async function GET(req: NextRequest) {
@@ -52,17 +43,16 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Missing params' }, { status: 400 })
   }
 
-  // Demo mode — no Supabase connected
+  // Demo mode — no Supabase configured
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
     return NextResponse.json({ slots: staticSlots(practitioner_id, date) })
   }
 
-  // Production — query Supabase
+  // Production — Supabase only, no silent fallback
   try {
     const { createAdminSupabase } = await import('@/lib/supabase/admin')
     const supabase = createAdminSupabase()
 
-    // practitioner_id param is the slug ('hema'/'shru') — resolve to UUID
     const { data: prac, error: pracErr } = await supabase
       .from('practitioners')
       .select('id')
@@ -70,7 +60,7 @@ export async function GET(req: NextRequest) {
       .single()
 
     if (pracErr || !prac) {
-      return NextResponse.json({ slots: staticSlots(practitioner_id, date) })
+      return NextResponse.json({ error: 'Practitioner not found.' }, { status: 404 })
     }
 
     const { data: slots, error } = await supabase
@@ -78,12 +68,13 @@ export async function GET(req: NextRequest) {
       .select('id, start_time, end_time, is_available')
       .eq('practitioner_id', prac.id)
       .eq('date', date)
+      .eq('is_available', true)   // booked slots are invisible to all users
       .order('start_time')
 
     if (error) throw error
     return NextResponse.json({ slots: slots ?? [] })
-  } catch {
-    // Supabase misconfigured — fall back to static
-    return NextResponse.json({ slots: staticSlots(practitioner_id, date) })
+  } catch (e) {
+    console.error('[slots]', e)
+    return NextResponse.json({ error: 'Could not load slots. Please try again.' }, { status: 500 })
   }
 }

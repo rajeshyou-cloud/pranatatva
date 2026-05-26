@@ -32,6 +32,7 @@ export default function StepSlotPicker({ data, onNext, onBack }: Props) {
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null)
   const [slots, setSlots] = useState<Slot[]>([])
   const [loading, setLoading] = useState(false)
+  const [slotError, setSlotError] = useState<string | null>(null)
 
   const monthStart = startOfMonth(currentMonth)
   const monthEnd = endOfMonth(currentMonth)
@@ -42,10 +43,14 @@ export default function StepSlotPicker({ data, onNext, onBack }: Props) {
     if (!selectedDate || !data.practitionerId) return
     setLoading(true)
     setSelectedSlot(null)
+    setSlotError(null)
     fetch(`/api/slots?practitioner_id=${data.practitionerId}&date=${format(selectedDate, 'yyyy-MM-dd')}`)
       .then(r => r.json())
-      .then(d => setSlots(d.slots ?? []))
-      .catch(() => setSlots([]))
+      .then(d => {
+        if (d.error) { setSlotError(d.error); setSlots([]) }
+        else setSlots(d.slots ?? [])
+      })
+      .catch(() => setSlotError('Could not load slots. Please try again.'))
       .finally(() => setLoading(false))
   }, [selectedDate, data.practitionerId])
 
@@ -169,6 +174,8 @@ export default function StepSlotPicker({ data, onNext, onBack }: Props) {
           <div className="flex items-center gap-2 text-brand-violet text-sm py-8 justify-center">
             <Loader2 className="w-4 h-4 animate-spin" /> Loading slots…
           </div>
+        ) : slotError ? (
+          <p className="text-red-500 text-[13px] py-8 text-center">{slotError}</p>
         ) : slots.length === 0 ? (
           <p className="text-brand-sage text-[13px] py-8 text-center">
             No slots available on this date. Please try another day.

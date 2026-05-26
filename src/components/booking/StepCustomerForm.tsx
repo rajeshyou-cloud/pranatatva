@@ -45,7 +45,7 @@ export default function StepCustomerForm({ data, onNext, onBack }: Props) {
       </div>
 
       <div>
-        <label className="label" htmlFor="phone">WhatsApp / Phone *</label>
+        <label className="label" htmlFor="phone">Phone *</label>
         <input
           id="phone" name="phone" type="tel" required defaultValue={data.clientPhone}
           className="input-field" placeholder="+91 98765 43210"
@@ -64,7 +64,7 @@ export default function StepCustomerForm({ data, onNext, onBack }: Props) {
         <p className="text-xs text-gray-400 mt-1">This is private and shared only with your practitioner.</p>
       </div>
 
-      {/* WhatsApp opt-in */}
+      {/* Reminders opt-in */}
       <label className="flex items-start gap-3 cursor-pointer">
         <input
           type="checkbox"
@@ -73,8 +73,8 @@ export default function StepCustomerForm({ data, onNext, onBack }: Props) {
           className="mt-1 rounded border-gray-300 text-brand-violet focus:ring-brand-violet"
         />
         <span className="text-sm text-gray-600">
-          Send me session reminders and booking confirmation via WhatsApp.
-          You can opt out at any time by replying STOP.
+          Send me session reminders and booking updates.
+          You can opt out at any time.
         </span>
       </label>
 

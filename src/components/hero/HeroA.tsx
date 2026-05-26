@@ -60,7 +60,7 @@ const badges = [
   { Icon: Calendar, text: 'Easy online booking with instant confirmation' },
   { Icon: Shield,   text: 'Secure Razorpay payments · GST invoice' },
   { Icon: Users,    text: 'Hemavathi & Shruthi — 2 expert practitioners' },
-  { Icon: Star,     text: 'English · Hindi · Telugu supported' },
+  { Icon: Star,     text: 'Sessions conducted in English' },
 ]
 
 export default function HeroA() {

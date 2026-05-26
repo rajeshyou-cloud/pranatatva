@@ -42,7 +42,7 @@ const badges = [
   { Icon: Calendar, text: 'Easy online booking, instant confirmation' },
   { Icon: Shield,   text: 'Razorpay · GST invoice · 100% secure' },
   { Icon: Users,    text: 'Hemavathi & Shruthi — certified practitioners' },
-  { Icon: Star,     text: 'English · Hindi · Telugu supported' },
+  { Icon: Star,     text: 'Sessions conducted in English' },
 ]
 
 const stats = [

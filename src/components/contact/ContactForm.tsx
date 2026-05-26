@@ -57,7 +57,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="label" htmlFor="phone">Phone / WhatsApp</label>
+        <label className="label" htmlFor="phone">Phone</label>
         <input id="phone" name="phone" type="tel" className="input-field" placeholder="+91 98765 43210" />
       </div>
 
@@ -85,7 +85,7 @@ export default function ContactForm() {
       </div>
 
       {status === 'error' && (
-        <p className="text-red-600 text-sm">Something went wrong. Please try again or WhatsApp us directly.</p>
+        <p className="text-red-600 text-sm">Something went wrong. Please try again or email us at hello@pranatatva.in</p>
       )}
 
       <button

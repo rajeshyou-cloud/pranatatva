@@ -20,7 +20,7 @@ const services: Record<string, {
     practitioner: 'Hemavathi',
     pracColor: '#8B5A2A',
     tags: ['Healing', 'Theta State', 'Energy Work'],
-    includes: ['Pre-session intake form and intention setting', 'Deep theta-state guided induction', 'Belief identification and permanent release', 'Post-session integration notes from Hemavathi', 'Zoom video link sent to email + WhatsApp', 'GST-compliant invoice emailed automatically'],
+    includes: ['Pre-session intake form and intention setting', 'Deep theta-state guided induction', 'Belief identification and permanent release', 'Post-session integration notes from Hemavathi', 'Zoom video link sent to your email', 'GST-compliant invoice emailed automatically'],
   },
   'abundance-manifestation': {
     slug: 'abundance-manifestation',
@@ -33,7 +33,7 @@ const services: Record<string, {
     practitioner: 'Hemavathi',
     pracColor: '#8B5A2A',
     tags: ['Manifestation', 'Abundance', 'Theta Healing'],
-    includes: ['Abundance block identification and release', 'Theta-state manifestation anchoring', 'Personalised 30-day manifestation practices', 'Action steps for immediate alignment', 'Zoom video link sent to email + WhatsApp', 'GST-compliant invoice emailed automatically'],
+    includes: ['Abundance block identification and release', 'Theta-state manifestation anchoring', 'Personalised 30-day manifestation practices', 'Action steps for immediate alignment', 'Zoom video link sent to your email', 'GST-compliant invoice emailed automatically'],
   },
   'tarot-card-reading': {
     slug: 'tarot-card-reading',
@@ -46,7 +46,7 @@ const services: Record<string, {
     practitioner: 'Shruthi',
     pracColor: '#6A3D8A',
     tags: ['Tarot', 'Guidance', 'Intuitive Reading'],
-    includes: ['Full spread reading tailored to your question', 'In-depth card interpretation', 'Practical guidance and next steps', 'Recording of key insights', 'Zoom video link sent to email + WhatsApp', 'GST-compliant invoice emailed automatically'],
+    includes: ['Full spread reading tailored to your question', 'In-depth card interpretation', 'Practical guidance and next steps', 'Recording of key insights', 'Zoom video link sent to your email', 'GST-compliant invoice emailed automatically'],
   },
   'spiritual-awakening-mastery': {
     slug: 'spiritual-awakening-mastery',
@@ -72,7 +72,7 @@ const services: Record<string, {
     practitioner: 'Shruthi',
     pracColor: '#6A3D8A',
     tags: ['Akashic Records', 'Soul Journey', 'Past Lives'],
-    includes: ['Full Akashic Records opening and prayer', 'Past-life pattern and soul contract exploration', 'Karma clearing and purpose alignment', 'Written summary of key insights', 'Zoom video link sent to email + WhatsApp', 'GST-compliant invoice emailed automatically'],
+    includes: ['Full Akashic Records opening and prayer', 'Past-life pattern and soul contract exploration', 'Karma clearing and purpose alignment', 'Written summary of key insights', 'Zoom video link sent to your email', 'GST-compliant invoice emailed automatically'],
   },
   'free-discovery-call': {
     slug: 'free-discovery-call',
@@ -85,7 +85,7 @@ const services: Record<string, {
     practitioner: 'Hemavathi or Shruthi',
     pracColor: '#8B5A2A',
     tags: ['Consultation', 'Free', 'Introductory'],
-    includes: ['Understand your current healing needs', 'Explore which service is the best fit', 'Meet your practitioner before booking', 'No payment required', 'Zoom video link sent to email + WhatsApp'],
+    includes: ['Understand your current healing needs', 'Explore which service is the best fit', 'Meet your practitioner before booking', 'No payment required', 'Zoom video link sent to your email'],
   },
 }
 

@@ -20,8 +20,8 @@ const values = [
   },
   {
     icon: Globe,
-    title: 'Inclusive & Multilingual',
-    description: 'Sessions available in English, Hindi, and Telugu — so healing is never lost in translation.',
+    title: 'Inclusive & Accessible',
+    description: 'Sessions are conducted in English, designed to be welcoming and accessible for every seeker.',
   },
   {
     icon: Award,
@@ -39,7 +39,7 @@ const practitioners = [
     stats: [
       { val: '1,400+', lbl: 'Sessions Conducted' },
       { val: '8+',     lbl: 'Years of Practice' },
-      { val: '3',      lbl: 'Languages' },
+      { val: 'EN',     lbl: 'Language' },
     ],
     bio: [
       'Hemavathi is a certified Theta Healing practitioner whose journey into energy medicine began over eight years ago through her own profound experience with ancestral healing. What started as a personal quest became a calling — to guide others through the subconscious layers that hold them back from the life they are meant to live.',
@@ -180,7 +180,7 @@ export default function AboutPage() {
                 ))}
                 <div style={{ marginTop: '0.5rem', padding: '1rem 1.2rem', background: `${p.accent}0D`, borderRadius: '10px', border: `1px dashed ${p.accent}30` }}>
                   <p style={{ fontSize: '11.5px', color: '#7A5540', lineHeight: 1.7, fontStyle: 'italic' }}>
-                    Sessions available in <strong>English</strong>, <strong>Hindi</strong> &amp; <strong>Telugu</strong>.
+                    Sessions conducted in <strong>English</strong>.
                     Online &amp; in-person options available.
                   </p>
                 </div>

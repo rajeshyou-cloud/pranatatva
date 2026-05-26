@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { CheckCircle2, Calendar, Clock, Mail, MessageCircle, Download } from 'lucide-react'
+import { CheckCircle2, Calendar, Clock, Mail, Download } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Booking Confirmed' }
 
@@ -31,8 +31,7 @@ export default function ConfirmationPage({ searchParams }: { searchParams: { ref
           <div className="space-y-3">
             {[
               { icon: Mail, text: 'A booking confirmation email with your invoice has been sent to your inbox.' },
-              { icon: MessageCircle, text: 'A WhatsApp message with your video join link has been sent (if opted in).' },
-              { icon: Calendar, text: 'You will receive a reminder 24 hours and 1 hour before your session.' },
+              { icon: Calendar, text: 'You will receive a reminder email 24 hours and 1 hour before your session.' },
               { icon: Clock, text: 'Join the Zoom video link 5 minutes before your session start time.' },
               { icon: Download, text: 'Your GST-compliant invoice is attached to your email.' },
             ].map(item => (

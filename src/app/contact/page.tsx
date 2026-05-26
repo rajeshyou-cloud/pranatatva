@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Mail, Phone, MessageCircle, Clock } from 'lucide-react'
+import { Mail, Phone, Clock } from 'lucide-react'
 import ContactForm from '@/components/contact/ContactForm'
 
 export const metadata: Metadata = {
@@ -16,15 +16,9 @@ const contactInfo = [
   },
   {
     icon: Phone,
-    label: 'Phone / WhatsApp',
+    label: 'Phone',
     value: '+91 99999 99999',
     href: 'tel:+919999999999',
-  },
-  {
-    icon: MessageCircle,
-    label: 'WhatsApp Chat',
-    value: 'Click to chat on WhatsApp',
-    href: 'https://wa.me/919999999999',
   },
   {
     icon: Clock,

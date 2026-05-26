@@ -163,7 +163,14 @@ Present 2 additional design direction options alongside the current design (Opti
 
 **Prerequisites:** Payments working (Session 5 complete)
 
-### Email (Resend)
+### Email (Brevo — migrate from Resend before prod)
+> ⚠️ Currently using Resend `onboarding@resend.dev` for dev/testing only. Switch to Brevo before production launch.
+> Brevo free tier: 9,000 emails/month (300/day) vs Resend's 3,000 — better for prod volume.
+> Steps: create Brevo account → verify `pranatatva.in` domain → install `@getbrevo/brevo` or use SMTP → update `EMAIL_FROM` + credentials in Vercel env vars.
+
+- [ ] Create Brevo account and verify `pranatatva.in` domain
+- [ ] Replace Resend SDK with Brevo in `src/lib/email.ts`
+- [ ] Update Vercel env vars: remove `RESEND_API_KEY`, add Brevo SMTP/API credentials
 - [ ] Booking confirmation email — service, date/time, Zoom link, invoice attached
 - [ ] 24h reminder email
 - [ ] 1h reminder email
@@ -248,6 +255,11 @@ Present 2 additional design direction options alongside the current design (Opti
 - [ ] Test all pages on live domain
 - [ ] Set up Vercel cron for reminder emails (24h + 1h before sessions)
 - [ ] PostHog analytics snippet added (privacy-first, no cookie banner needed initially)
+
+### Pre-UAT blockers (must be done BEFORE UAT begins)
+- [ ] **Email domain** — get DNS access for `pranatatva.in`, set up Brevo, verify domain, migrate `src/lib/email.ts` from Resend → Brevo, update Vercel env vars
+- [ ] **Razorpay test mode** — add credentials to Vercel and test a paid booking end-to-end
+- [ ] **Supabase** — confirm RLS policies active; schema already seeded ✅
 
 ### Go-live checklist
 - [ ] WhatsApp templates submitted and approved in Meta Business Manager

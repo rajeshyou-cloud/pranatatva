@@ -56,9 +56,6 @@ export default function Header({ sidebarVisible = false }: { sidebarVisible?: bo
 
         {/* CTAs */}
         <div className="hidden md:flex items-center gap-2.5">
-          <span className="text-[11px] text-white/50 border border-white/20 rounded-full px-3 py-1.5 cursor-pointer hover:text-white/80 transition-colors select-none">
-            EN · हि · తె
-          </span>
           <button className="text-[13px] text-white/75 border border-white/25 rounded-full px-4 py-1.5 hover:text-white transition-colors">
             Sign in
           </button>
