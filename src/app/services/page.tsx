@@ -446,20 +446,6 @@ export default function ServicesPage() {
 
       {/* Body */}
       <div className="max-w-7xl mx-auto px-6 md:px-11 py-9">
-        {/* AI Banner */}
-        <div className="bg-gradient-to-r from-brand-sec-bg to-[#FDF0D8] border border-brand-secondary/20 rounded-2xl p-5 mb-7 flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3.5">
-            <div className="w-11 h-11 rounded-full bg-brand-secondary/15 border border-brand-secondary/30 flex items-center justify-center text-xl flex-shrink-0">✦</div>
-            <div>
-              <div className="text-[15px] font-medium text-brand-heading">Not sure where to begin your inner healing journey?</div>
-              <div className="text-[12px] text-brand-sage mt-0.5">Answer 5 gentle questions — our AI guides you to the perfect service and practitioner for where your soul is right now.</div>
-            </div>
-          </div>
-          <a href="/contact" className="flex-shrink-0 px-5 py-2.5 rounded-full bg-brand-violet text-white text-[13px] font-medium hover:bg-brand-purple transition-colors whitespace-nowrap">
-            Find my healing path →
-          </a>
-        </div>
-
         {/* Results bar */}
         <div className="flex justify-between items-center mb-6">
           <span className="text-[13px] text-brand-sage">
