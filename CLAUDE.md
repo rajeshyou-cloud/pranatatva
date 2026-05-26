@@ -2,6 +2,12 @@
 
 India B2C + B2B web platform with WhatsApp integration.
 
+## Session Protocol
+
+**START of every session:** Read `docs/RESUME.md` first to understand current state, what's done, and what's next.
+
+**END of every session:** Update `docs/RESUME.md` with what was completed, what changed, and what's pending next session. Keep it current — this is the single source of truth for session continuity.
+
 ## Project Overview
 
 A spiritual wellness portal for 1:1 healing sessions, group cohorts, events, and subscriptions. Serves individual seekers (B2C) and corporate wellness programs (B2B). Supports 2–5 multi-disciplinary practitioners.

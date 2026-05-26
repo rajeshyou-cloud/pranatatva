@@ -122,7 +122,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
               <h1 className="font-display text-4xl md:text-5xl font-semibold mt-2 mb-4">{s.name}</h1>
               <div className="flex flex-wrap items-center gap-4 text-white/70 text-sm">
                 <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" /> {s.duration} minutes
+                  <Clock className="w-4 h-4" /> {s.duration === 0 ? '8-week program' : `${s.duration} min`}
                 </span>
                 <span className="flex items-center gap-1">
                   {s.sessionType === 'group'

@@ -455,7 +455,7 @@ export default function ServicesPage() {
               <div className="text-[12px] text-brand-sage mt-0.5">Answer 5 gentle questions — our AI guides you to the perfect service and practitioner for where your soul is right now.</div>
             </div>
           </div>
-          <a href="/ai-recommender" className="flex-shrink-0 px-5 py-2.5 rounded-full bg-brand-violet text-white text-[13px] font-medium hover:bg-brand-purple transition-colors whitespace-nowrap">
+          <a href="/contact" className="flex-shrink-0 px-5 py-2.5 rounded-full bg-brand-violet text-white text-[13px] font-medium hover:bg-brand-purple transition-colors whitespace-nowrap">
             Find my healing path →
           </a>
         </div>

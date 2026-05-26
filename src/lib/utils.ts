@@ -6,6 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatINR(paise: number): string {
+  if (paise === 0) return 'Free'
   const rupees = paise / 100
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
