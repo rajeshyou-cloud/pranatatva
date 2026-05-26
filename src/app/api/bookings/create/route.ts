@@ -14,25 +14,17 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Intake consent is required.' }, { status: 400 })
   }
 
-  // Demo mode — no Supabase or Razorpay configured
-  const isDemo = !process.env.RAZORPAY_KEY_ID || !process.env.NEXT_PUBLIC_SUPABASE_URL
+  const hasSupabase = !!process.env.NEXT_PUBLIC_SUPABASE_URL
+  const hasRazorpay = !!process.env.RAZORPAY_KEY_ID
 
-  if (isDemo) {
-    return NextResponse.json({
-      bookingRef: demoRef(),
-      orderId: 'demo',
-      keyId: null,
-      demo: true,
-    })
+  // Full demo — no Supabase at all
+  if (!hasSupabase) {
+    return NextResponse.json({ bookingRef: demoRef(), orderId: 'demo', keyId: null, demo: true })
   }
 
-  // ── Production path ────────────────────────────────────────────────
+  // ── Supabase is connected ──────────────────────────────────
   try {
-    const [{ createAdminSupabase }, Razorpay] = await Promise.all([
-      import('@/lib/supabase/admin'),
-      import('razorpay').then(m => m.default),
-    ])
-
+    const { createAdminSupabase } = await import('@/lib/supabase/admin')
     const supabase = createAdminSupabase()
 
     // Resolve slugs to UUIDs
@@ -84,7 +76,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Could not create booking.' }, { status: 500 })
     }
 
-    // Free bookings skip Razorpay — confirm immediately and send emails
+    // Free bookings — confirm immediately and send emails
     if (body.pricePaise === 0) {
       await supabase
         .from('bookings')
@@ -113,7 +105,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ bookingRef: booking.booking_ref, orderId: 'free', keyId: null })
     }
 
-    // Create Razorpay order
+    // Paid booking — no Razorpay configured yet, simulate payment
+    if (!hasRazorpay) {
+      return NextResponse.json({
+        bookingRef: booking.booking_ref,
+        orderId: 'demo',
+        keyId: null,
+        demo: true,
+      })
+    }
+
+    // ── Real Razorpay ──────────────────────────────────────────
+    const Razorpay = await import('razorpay').then(m => m.default)
     const rzp = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID!,
       key_secret: process.env.RAZORPAY_KEY_SECRET!,
