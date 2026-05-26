@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function BookPage({ searchParams }: { searchParams: { service?: string } }) {
   return (
     <section className="py-16 bg-brand-cream min-h-screen">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="font-display text-4xl font-semibold text-brand-violet mb-2">
           Book a Session
         </h1>
