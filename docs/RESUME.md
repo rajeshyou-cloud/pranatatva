@@ -1,6 +1,6 @@
 # PranaTatva — Session Resume Notes
 
-**Last updated:** 2026-05-26 (Session 5)
+**Last updated:** 2026-05-26 (Session 6)
 
 ---
 
@@ -41,7 +41,27 @@ A full UI redesign of the PranaTatva spiritual wellness portal to match the refe
 
 ---
 
-## Session 5 — 2026-05-26 (Today)
+## Session 6 — 2026-05-26 (Today)
+
+### Completed this session
+
+| Task | File(s) | Notes |
+|---|---|---|
+| HeroD mandala pill positions fixed | `src/components/hero/HeroD.tsx` | Top/bottom pills moved from 11%/14% → 21% edge offset; side pills from 3% → 11%. Now hug Ring 1 instead of floating disconnected. |
+| HeroD social badge repositioned | `src/components/hero/HeroD.tsx` | Moved from `bottom: 28%` → `bottom: 11%` — no longer overlaps bottom pills. |
+| Design D footer language fixed | `src/app/(designs)/design-d/page.tsx` | `EN | हि | తె` → `English` (missed during Session 5 language cleanup). |
+| .mcp.json removed from git index | `.gitignore`, git history | Was still tracked despite being in `.gitignore`; ran `git rm --cached`. PAT no longer in git. |
+| Private preview password gate | `src/middleware.ts`, `src/app/access/page.tsx`, `src/app/api/access/route.ts` | Middleware redirects all visitors to `/access` unless `pt_gate` cookie is valid. Password from `SITE_PASSWORD` env var. Disable by deleting the env var — no code change needed. Cookie valid 7 days. |
+| SITE_PASSWORD added to Vercel | Vercel dashboard | Set for Production + Preview environments. Deployment auto-triggered. |
+| AI recommender banner removed from services | `src/app/services/page.tsx` | "Not sure where to begin?" AI banner removed from top of services listing. Deferred to Phase 2. Underlying i18n/AI logic in codebase untouched. |
+
+### Key decisions this session
+- **Password gate pattern:** `SITE_PASSWORD` env var controls gate. No env var = open site. Makes go-live a one-step Vercel config change (delete the var + redeploy). Password is `pranatatva2030` locally (`.env.local`).
+- **AI recommender = Phase 2:** Banner removed from services UI. All code stays in place for when it's built out properly.
+
+---
+
+## Session 5 — 2026-05-26
 
 ### Completed this session
 
@@ -161,6 +181,7 @@ npx next dev
 - [ ] **Brevo email domain** — get DNS access for `pranatatva.in` → create Brevo account → verify domain → migrate `src/lib/email.ts` → update Vercel env vars
 - [ ] **Razorpay** — add test credentials to Vercel, test a paid booking end-to-end
 - [ ] **Supabase RLS** — policies exist in schema but need live verification
+- [ ] **Remove password gate** — delete `SITE_PASSWORD` env var in Vercel before public launch
 
 ### UI / Frontend
 - [ ] Contact page — phone number still placeholder `+91 99999 99999` — needs real number
