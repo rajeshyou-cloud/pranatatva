@@ -28,14 +28,22 @@ export async function POST(req: NextRequest) {
     const supabase = createAdminSupabase()
 
     // Resolve slugs to UUIDs
-    const [{ data: service }, { data: practitioner }] = await Promise.all([
+    console.log('[bookings/create] looking up service slug:', body.serviceSlug, '| practitioner slug:', body.practitionerId)
+
+    const [serviceResult, practitionerResult] = await Promise.all([
       supabase.from('services').select('id').eq('slug', body.serviceSlug).single(),
       supabase.from('practitioners').select('id').eq('slug', body.practitionerId).single(),
     ])
 
-    if (!service || !practitioner) {
+    console.log('[bookings/create] service result:', JSON.stringify({ data: serviceResult.data, error: serviceResult.error }))
+    console.log('[bookings/create] practitioner result:', JSON.stringify({ data: practitionerResult.data, error: practitionerResult.error }))
+
+    if (!serviceResult.data || !practitionerResult.data) {
       return NextResponse.json({ error: 'Service or practitioner not found.' }, { status: 404 })
     }
+
+    const service = serviceResult.data
+    const practitioner = practitionerResult.data
 
     // Lock the slot
     const { error: slotErr } = await supabase
