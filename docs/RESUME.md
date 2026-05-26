@@ -1,6 +1,6 @@
 # PranaTatva — Session Resume Notes
 
-**Last updated:** 2026-05-26
+**Last updated:** 2026-05-26 (Session 5)
 
 ---
 
@@ -41,7 +41,53 @@ A full UI redesign of the PranaTatva spiritual wellness portal to match the refe
 
 ---
 
-## Session 3 — 2026-05-26 (Today)
+## Session 5 — 2026-05-26 (Today)
+
+### Completed this session
+
+| Task | File(s) | Notes |
+|---|---|---|
+| Fixed Supabase ENOTFOUND | `.env.local`, Vercel env vars | Project ref had `i` instead of `l` (kehsylhi**x** → kehsylhl**x**). Fixed by decoding JWT payload to get actual ref. |
+| Supabase fully connected | — | Debug endpoint confirms both practitioners + all 6 services live in DB. |
+| Slots API — production hardened | `src/app/api/slots/route.ts` | Removed static fallback when Supabase is configured. Added `.eq('is_available', true)` — booked slots invisible to all users. Returns proper error on failure. |
+| StepSlotPicker — error state | `src/components/booking/StepSlotPicker.tsx` | Now shows API error message instead of silent empty list. |
+| End-to-end booking tested | — | Free Discovery Call booked successfully. Booking ref created, slot locked, confirmation page shown. |
+| Email confirmed working | `src/lib/email.ts` | Confirmation + practitioner alert emails delivered. Works to Gmail (Resend `onboarding@resend.dev` restriction — only delivers to registered email). |
+| WhatsApp → Email in all UI | Multiple files | Removed all WhatsApp mentions from customer-facing UI. Opt-in checkbox kept with neutral label ("session reminders"). `whatsapp_opt_in` DB field preserved for Phase 2. |
+| Multilanguage → English only in UI | `Header.tsx`, `HeroA.tsx`, `HeroB.tsx`, `about/page.tsx` | Removed EN·हि·తె switcher from header. All language pills/stats updated to English only. i18n logic in codebase untouched. |
+| .mcp.json untracked from git | `.gitignore`, git history | Was accidentally tracked — contained Supabase PAT. Removed from index. Now gitignored permanently. |
+| PROJECT_PLAN updated | `docs/PROJECT_PLAN.md` | Added Pre-UAT blockers section. Email section updated to Brevo migration plan. |
+| Pushed to Vercel | — | Commit: "Phase 1 cleanup — email-only comms, English-only UI, Supabase slot fix" |
+
+### Key decisions this session
+- **Brevo over Resend for prod** — Resend free tier restricts `onboarding@resend.dev` to registered email only. Brevo free tier (9k/mo) chosen for production. Migrate before UAT. Blocked on DNS access for `pranatatva.in`.
+- **WhatsApp is Phase 2** — All UI references removed. DB field + opt-in logic kept. Cost: ~₹0.12/utility message; ~₹800–1,700/month total at launch volume.
+- **Static slot fallback removed** — In production, Supabase failures surface as errors. No fake slots shown to real users.
+
+---
+
+## Session 4 — 2026-05-26
+
+### Completed this session
+
+| Task | File(s) | Notes |
+|---|---|---|
+| Supabase schema + seed data | `docs/supabase-schema.sql` | 5 tables, RLS policies, 2 practitioners (hema/shru), 6 services, 728 slots (90 days). Run in Supabase SQL editor. |
+| `.env.local` created at project root | `.env.local` | Supabase URL + anon + service_role keys, Resend API key, EMAIL_FROM, ADMIN_EMAIL |
+| Booking API — split demo mode | `src/app/api/bookings/create/route.ts` | `hasSupabase` and `hasRazorpay` now independent checks; free bookings save to DB + send emails even without Razorpay |
+| Email templates rebuilt | `src/lib/email.ts` | `BookingEmailRecord` flat interface; amber/earthy brand palette; slot date/time shown; fire-and-forget pattern |
+| Slots API — slug→UUID lookup | `src/app/api/slots/route.ts` | Looks up practitioner by slug before querying availability_slots; falls back to static if not found |
+| Debug endpoint (temp) | `src/app/api/debug/supabase/route.ts` | Tests Supabase connection; diagnoses key format + table access |
+| Resend email vars added to Vercel | Vercel dashboard | `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_EMAIL` added to Production + Preview |
+| Supabase URL tab-character fixed | Vercel dashboard | `NEXT_PUBLIC_SUPABASE_URL` had leading `\t`; re-entered clean |
+| Supabase MCP configured | `.mcp.json` | Project ref `kehsylhixlibhvjobvtn`, PAT stored; `.mcp.json` gitignored |
+
+### Supabase — RESOLVED ✅
+Project ref typo fixed (`kehsylhixlibhvjobvtn` → `kehsylhlxlibhvjobvtn`). Both practitioners and all 6 services confirmed in DB. Free booking end-to-end working.
+
+---
+
+## Session 3 — 2026-05-26
 
 ### Completed this session
 
@@ -111,28 +157,25 @@ npx next dev
 
 ## What's NOT done (Next session picks these up)
 
+### Pre-UAT blockers (do these first)
+- [ ] **Brevo email domain** — get DNS access for `pranatatva.in` → create Brevo account → verify domain → migrate `src/lib/email.ts` → update Vercel env vars
+- [ ] **Razorpay** — add test credentials to Vercel, test a paid booking end-to-end
+- [ ] **Supabase RLS** — policies exist in schema but need live verification
+
 ### UI / Frontend
-- [ ] Contact page — phone number is still placeholder `+91 99999 99999` — needs real number
-- [ ] Services page mobile — card grid and content QA below the hero (sidebar fix is done; content layout may still need review)
+- [ ] Contact page — phone number still placeholder `+91 99999 99999` — needs real number
 - [ ] Booking flow — visual QA on mobile
-- [ ] AdBanner component (40px top strip) — verify it renders correctly on mobile
+- [ ] Footer — not built yet
 
-### Blocked on user (requires credentials / decisions)
-- [ ] `.env.local` — needs Supabase, Razorpay, Resend, Anthropic, WhatsApp, Zoom API keys
-- [ ] Supabase schema — add Hemavathi + Shruthi as practitioners, update service slugs
-- [ ] Real contact number for Contact page
-- [ ] WhatsApp Business number for click-to-chat links
-
-### Backend (partially built — demo mode only)
-- [x] Slot API — static schedule (demo); needs real Supabase slots table
-- [x] Booking create API — demo mode returns mock ref; needs real Supabase + Razorpay
-- [x] Payment verify API — passthrough in demo; needs real Razorpay signature check
-- [ ] Auth (Supabase email OTP + Google SSO)
-- [ ] Confirmation page `/booking/confirmation` — needs to exist and show booking ref
-- [ ] WhatsApp notifications (Meta Cloud API)
+### Backend
+- [ ] Auth — Supabase email OTP + Google SSO not built
+- [ ] Auth middleware on protected routes (`/admin/*`, `/api/bookings/*`)
+- [ ] Duplicate booking prevention
+- [ ] Reschedule / cancel flow
+- [ ] GST invoice PDF generation
 - [ ] Zoom meeting auto-link on booking
-- [ ] Admin dashboard (real data)
-- [ ] Email via Resend (file exists but untested)
+- [ ] Admin dashboard (real data — shell exists)
+- [ ] WhatsApp notifications — Phase 2
 
 ---
 

@@ -53,14 +53,14 @@ const stats = [
   { val: '10+',    lbl: 'Modalities' },
 ]
 
-/* Hexagonal orbit — 6 pills around the central logo */
+/* Hexagonal orbit — 6 pills around the central logo, hugging Ring 1 */
 const pills = [
-  { label: 'Theta Healing',    top: '11%',  left: '14%',  anim: 'hD-floatA', dur: '3.6s', delay: '0s'   },
-  { label: 'Tarot Reading',    top: '11%',  right: '11%', anim: 'hD-floatB', dur: '4.0s', delay: '0.3s' },
-  { label: 'Akashic Records',  top: '46%',  left: '3%',   anim: 'hD-floatB', dur: '3.8s', delay: '0.6s' },
-  { label: 'Reiki Healing',    top: '46%',  right: '3%',  anim: 'hD-floatA', dur: '4.2s', delay: '0.9s' },
-  { label: 'Manifestation',    bottom:'14%',left: '14%',  anim: 'hD-floatA', dur: '3.4s', delay: '1.2s' },
-  { label: 'Chakra Balancing', bottom:'14%',right: '10%', anim: 'hD-floatB', dur: '3.9s', delay: '1.5s' },
+  { label: 'Theta Healing',    top: '21%',    left: '8%',   anim: 'hD-floatA', dur: '3.6s', delay: '0s'   },
+  { label: 'Tarot Reading',    top: '21%',    right: '7%',  anim: 'hD-floatB', dur: '4.0s', delay: '0.3s' },
+  { label: 'Akashic Records',  top: '46%',    left: '11%',  anim: 'hD-floatB', dur: '3.8s', delay: '0.6s' },
+  { label: 'Reiki Healing',    top: '46%',    right: '11%', anim: 'hD-floatA', dur: '4.2s', delay: '0.9s' },
+  { label: 'Manifestation',    bottom: '21%', left: '8%',   anim: 'hD-floatA', dur: '3.4s', delay: '1.2s' },
+  { label: 'Chakra Balancing', bottom: '21%', right: '7%',  anim: 'hD-floatB', dur: '3.9s', delay: '1.5s' },
 ]
 
 /* Scattered gold sparks on the right panel */
@@ -271,9 +271,9 @@ export default function HeroD() {
           />
         </div>
 
-        {/* Social proof badge — floats just below logo */}
+        {/* Social proof badge — floats below all pills */}
         <div style={{
-          position: 'absolute', bottom: '28%', left: '50%', transform: 'translateX(-50%)',
+          position: 'absolute', bottom: '11%', left: '50%', transform: 'translateX(-50%)',
           background: 'rgba(255,255,255,0.88)', border: '1px solid rgba(196,120,10,0.25)',
           borderRadius: '100px', padding: '6px 16px',
           display: 'flex', alignItems: 'center', gap: '8px',

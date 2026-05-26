@@ -340,7 +340,7 @@ export default function DesignDPage() {
         <PatternBorder color1="#D4500A40" color2="#E8A81840" height={3} />
         <div style={{ paddingTop: '2rem' }}>
           <div className="cinzel" style={{ fontSize: '1.2rem', color: '#E8A818', letterSpacing: '.1em', fontWeight: 600, marginBottom: '.4rem' }}>PranaTatva</div>
-          <p style={{ fontSize: '.7rem', color: '#5A3828', letterSpacing: '.06em' }}>Sacred Healing · India · EN | हि | తె</p>
+          <p style={{ fontSize: '.7rem', color: '#5A3828', letterSpacing: '.06em' }}>Sacred Healing · India · English</p>
           <p style={{ fontSize: '.65rem', color: '#3A1A10', marginTop: '1.5rem' }}>© 2026 PranaTatva. Sessions are complementary wellness services and not a substitute for medical advice.</p>
           <div style={{ marginTop: '1.2rem' }}>
             <Link href="/designs" style={{ fontSize: '.7rem', color: '#6A3020', textDecoration: 'none', fontFamily: "'Cinzel',serif", borderBottom: '1px solid #3A1A10', paddingBottom: '1px' }}>← Back to Design Options</Link>
