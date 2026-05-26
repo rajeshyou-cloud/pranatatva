@@ -83,6 +83,7 @@ export async function POST(req: NextRequest) {
         .update({ status: 'confirmed' })
         .eq('booking_ref', booking.booking_ref)
 
+      console.log('[bookings/create] free booking confirmed, sending emails to:', body.clientEmail)
       import('@/lib/email')
         .then(({ sendBookingConfirmationEmail, sendPractitionerAlertEmail }) => {
           const emailRecord = {
@@ -97,10 +98,16 @@ export async function POST(req: NextRequest) {
             slot_time: body.slotTime,
             zoom_link: null,
           }
-          sendBookingConfirmationEmail(emailRecord).catch(console.error)
-          sendPractitionerAlertEmail(emailRecord).catch(console.error)
+          console.log('[bookings/create] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY)
+          console.log('[bookings/create] EMAIL_FROM:', process.env.EMAIL_FROM)
+          sendBookingConfirmationEmail(emailRecord)
+            .then(() => console.log('[bookings/create] client email sent ok'))
+            .catch(e => console.error('[bookings/create] client email failed:', e))
+          sendPractitionerAlertEmail(emailRecord)
+            .then(() => console.log('[bookings/create] practitioner email sent ok'))
+            .catch(e => console.error('[bookings/create] practitioner email failed:', e))
         })
-        .catch(console.error)
+        .catch(e => console.error('[bookings/create] email import failed:', e))
 
       return NextResponse.json({ bookingRef: booking.booking_ref, orderId: 'free', keyId: null })
     }
