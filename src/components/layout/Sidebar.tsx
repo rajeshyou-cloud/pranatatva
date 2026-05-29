@@ -1,22 +1,45 @@
 'use client'
-import { usePathname } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { CheckCircle2 } from 'lucide-react'
 
-const bookingSteps = [
-  { label: 'Browse Services',  href: '/services' },
-  { label: 'Service Details',  href: null },
-  { label: 'Pick a Slot',      href: null },
-  { label: 'Intake Form',      href: null },
-  { label: 'Checkout',         href: null },
-  { label: 'Confirmation',     href: null },
+const BOOKING_STEPS = [
+  {
+    label: 'Browse Services',
+    active: (p: string, _s: string | null) => p === '/services' || p.startsWith('/services/'),
+  },
+  {
+    label: 'Select a Service',
+    active: (p: string, s: string | null) => p === '/book' && (s === '1' || s === null),
+  },
+  {
+    label: 'Date & Time',
+    active: (p: string, s: string | null) => p === '/book' && s === '2',
+  },
+  {
+    label: 'Your Details',
+    active: (p: string, s: string | null) => p === '/book' && s === '3',
+  },
+  {
+    label: 'Review',
+    active: (p: string, s: string | null) => p === '/book' && s === '4',
+  },
+  {
+    label: 'Payment',
+    active: (p: string, s: string | null) => p === '/book' && s === '5',
+  },
+  {
+    label: 'Confirmation',
+    active: (p: string, _s: string | null) => p.startsWith('/booking/confirmation'),
+  },
 ]
 
 export default function Sidebar() {
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+  const stepParam = searchParams.get('step')
 
-  function isOnServices() {
-    return pathname === '/services' || pathname.startsWith('/services/')
-  }
+  const activeIndex = BOOKING_STEPS.findIndex(s => s.active(pathname, stepParam))
 
   return (
     <nav
@@ -24,7 +47,7 @@ export default function Sidebar() {
       style={{ background: '#2C1A0E', scrollbarWidth: 'none' }}
       aria-label="Main navigation"
     >
-      {/* Spacer: 40px AdBanner + 62px Header = 102px — keeps booking flow below the header */}
+      {/* Spacer: 40px AdBanner + 62px Header = 102px */}
       <div style={{ height: 102, flexShrink: 0 }} />
 
       {/* ── Booking flow ── */}
@@ -36,8 +59,9 @@ export default function Sidebar() {
           Booking Flow
         </p>
 
-        {bookingSteps.map((step, i) => {
-          const isActive = step.href ? (step.href === '/services' ? isOnServices() : pathname === step.href) : false
+        {BOOKING_STEPS.map((step, i) => {
+          const isCompleted = activeIndex !== -1 && i < activeIndex
+          const isActive = i === activeIndex
           return (
             <div
               key={i}
@@ -45,7 +69,9 @@ export default function Sidebar() {
                 'flex items-center gap-2.5 px-[18px] py-[9px] border-l-[2.5px] text-[12.5px] transition-all duration-150',
                 isActive
                   ? 'border-[#D4AD25] bg-[rgba(212,173,37,0.12)] text-white'
-                  : 'border-transparent text-white/38 cursor-default'
+                  : isCompleted
+                    ? 'border-[rgba(212,173,37,0.35)] text-white/55'
+                    : 'border-transparent text-white/30 cursor-default'
               )}
             >
               <div
@@ -53,10 +79,12 @@ export default function Sidebar() {
                   'w-[20px] h-[20px] rounded-full border flex items-center justify-center text-[9px] flex-shrink-0 font-medium',
                   isActive
                     ? 'bg-[#D4AD25] border-[#D4AD25] text-[#2C1A0E]'
-                    : 'border-white/22 text-white/38'
+                    : isCompleted
+                      ? 'bg-[rgba(212,173,37,0.22)] border-[rgba(212,173,37,0.45)] text-[#D4AD25]'
+                      : 'border-white/15 text-white/30'
                 )}
               >
-                {i + 1}
+                {isCompleted ? <CheckCircle2 style={{ width: 11, height: 11 }} /> : i + 1}
               </div>
               {step.label}
             </div>

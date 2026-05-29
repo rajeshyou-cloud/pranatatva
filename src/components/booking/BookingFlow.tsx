@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter, usePathname } from 'next/navigation'
 import { CheckCircle2, Clock, Video, Shield, RefreshCw, FileText } from 'lucide-react'
 import StepServiceSelect, { services } from './StepServiceSelect'
 import StepSlotPicker from './StepSlotPicker'
@@ -147,6 +148,8 @@ function ServiceInfoCard({ data }: { data: Partial<BookingData> }) {
 }
 
 export default function BookingFlow({ initialService }: { initialService?: string }) {
+  const router = useRouter()
+  const pathname = usePathname()
   const svc = initialService ? services.find(s => s.slug === initialService) : undefined
   const [step, setStep] = useState(svc ? 2 : 1)
   const [data, setData] = useState<Partial<BookingData>>(
@@ -159,6 +162,13 @@ export default function BookingFlow({ initialService }: { initialService?: strin
       practitionerName: svc.practitionerName,
     } : {}
   )
+
+  // Keep ?step=N in the URL so the sidebar can highlight the current step
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    params.set('step', step.toString())
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false })
+  }, [step]) // eslint-disable-line react-hooks/exhaustive-deps
 
   function next(update: Partial<BookingData>) {
     setData(prev => ({ ...prev, ...update }))

@@ -1,4 +1,5 @@
 'use client'
+import { Suspense } from 'react'
 import { usePathname } from 'next/navigation'
 import Sidebar from './Sidebar'
 import Header from './Header'
@@ -20,7 +21,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
 
   return (
     <>
-      {showSidebar && <Sidebar />}
+      {showSidebar && <Suspense fallback={null}><Sidebar /></Suspense>}
 
       <div
         className={`flex flex-col min-h-screen transition-all duration-300 ${showSidebar ? 'md:ml-[230px]' : ''}`}
