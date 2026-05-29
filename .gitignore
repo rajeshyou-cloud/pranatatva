@@ -11,6 +11,12 @@
 .env
 .env.local
 .env.*.local
+docs/.env.local
+
+# sensitive docs — never commit spreadsheets with credentials
+*.xlsx
+*.xls
+docs/Environment Details.xlsx
 
 # misc
 .DS_Store
