@@ -49,6 +49,7 @@ export default function Footer() {
               {[
                 ['/', 'Home'],
                 ['/services', 'All Services'],
+                ['/blog', 'Healing Journal'],
                 ['/about', 'About Us'],
                 ['/contact', 'Contact'],
                 ['/book', 'Book a Session'],
