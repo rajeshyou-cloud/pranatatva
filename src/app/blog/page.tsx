@@ -10,13 +10,21 @@ export const metadata: Metadata = {
 const CATEGORY_COLORS: Record<string, string> = {
   'Healing Modalities': 'bg-amber-100 text-amber-800',
   'Soul Work':          'bg-purple-100 text-purple-800',
-  'Sadhana':            'bg-green-100 text-green-800',
+  'Sadhana':            'bg-emerald-100 text-emerald-800',
   'Manifestation':      'bg-orange-100 text-orange-800',
-  'Spiritual Growth':   'bg-blue-100 text-blue-800',
+  'Spiritual Growth':   'bg-sky-100 text-sky-800',
+}
+
+const CATEGORY_ICONS: Record<string, string> = {
+  'Healing Modalities': '✦',
+  'Soul Work':          '◎',
+  'Sadhana':            '☽',
+  'Manifestation':      '✧',
+  'Spiritual Growth':   '∞',
 }
 
 function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })
+  return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
 export default function BlogPage() {
@@ -24,90 +32,145 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen bg-[#FBF7F0]">
-      {/* Hero */}
-      <div className="bg-brand-charcoal pt-6 pb-8 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-brand-amber text-xs font-medium tracking-widest uppercase mb-2">PranaTatva Healing Journal</p>
-          <h1 className="font-display text-3xl md:text-4xl text-white mb-2">
-            Wisdom for the <span className="text-brand-amber italic">Inner Journey</span>
-          </h1>
-          <p className="text-white/50 text-sm max-w-xl mx-auto">
-            Insights on healing, sadhana, and spiritual growth — grounded in ancient wisdom, written for modern seekers.
-          </p>
+
+      {/* ── Hero ── */}
+      <div className="bg-brand-charcoal py-8 px-4 relative overflow-hidden">
+        {/* Decorative rings */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-white/5 translate-x-1/2" />
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-40 h-40 rounded-full border border-white/5 translate-x-1/2" />
+        <div className="max-w-5xl mx-auto flex items-center justify-between gap-6">
+          <div>
+            <p className="text-brand-amber text-xs font-medium tracking-widest uppercase mb-1.5">PranaTatva Healing Journal</p>
+            <h1 className="font-display text-3xl md:text-4xl text-white">
+              Wisdom for the <span className="text-brand-amber italic">Inner Journey</span>
+            </h1>
+            <p className="text-white/45 text-sm mt-1.5 max-w-lg">
+              Insights on healing, sadhana, and spiritual growth — grounded in ancient wisdom.
+            </p>
+          </div>
+          <div className="hidden md:flex gap-2 flex-shrink-0">
+            {['Healing', 'Sadhana', 'Soul Work'].map(tag => (
+              <span key={tag} className="text-xs text-white/40 border border-white/10 rounded-full px-3 py-1">{tag}</span>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-4 py-14">
+      <div className="max-w-5xl mx-auto px-4 py-10">
 
-        {/* Featured post */}
-        <Link href={`/blog/${featured.slug}`} className="group block mb-14">
-          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-amber/10 hover:shadow-md transition-shadow">
-            <div className="md:grid md:grid-cols-[1fr_2fr]">
-              {/* Decorative panel */}
-              <div className="bg-brand-charcoal min-h-[200px] md:min-h-0 flex flex-col justify-end p-8">
-                <div className="w-12 h-1 bg-brand-amber rounded mb-4" />
-                <span className={`inline-block text-xs font-medium px-2.5 py-1 rounded-full mb-3 ${CATEGORY_COLORS[featured.category] ?? 'bg-gray-100 text-gray-700'}`}>
+        {/* ── Featured post ── */}
+        <div className="mb-2">
+          <p className="text-xs text-brand-amber font-medium tracking-widest uppercase mb-4">Featured Article</p>
+        </div>
+        <Link href={`/blog/${featured.slug}`} className="group block mb-12">
+          <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E8D9C4] hover:shadow-lg transition-all duration-300 md:grid md:grid-cols-[260px_1fr]">
+            {/* Decorative left panel */}
+            <div className="bg-brand-charcoal relative min-h-[180px] md:min-h-0 flex flex-col items-center justify-center p-8 overflow-hidden">
+              {/* Concentric circles */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-48 h-48 rounded-full border border-white/5" />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-32 h-32 rounded-full border border-white/8" />
+              </div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full border border-brand-amber/20" />
+              </div>
+              {/* Lotus SVG */}
+              <svg viewBox="0 0 80 80" className="w-16 h-16 relative z-10" fill="none">
+                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.9" transform="rotate(0 40 40)" />
+                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.6" transform="rotate(45 40 40)" />
+                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.6" transform="rotate(-45 40 40)" />
+                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.35" transform="rotate(90 40 40)" />
+                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.35" transform="rotate(-90 40 40)" />
+                <circle cx="40" cy="40" r="5" fill="#E8A020" />
+              </svg>
+              <div className="relative z-10 mt-4 text-center">
+                <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${CATEGORY_COLORS[featured.category] ?? 'bg-gray-100 text-gray-700'}`}>
                   {featured.category}
                 </span>
-                <p className="text-white/40 text-xs">{featured.readTime} min read</p>
+                <p className="text-white/30 text-xs mt-2">{featured.readTime} min read</p>
               </div>
-              {/* Content */}
-              <div className="p-8 flex flex-col justify-center">
-                <span className="text-xs text-brand-amber font-medium uppercase tracking-wider mb-2">Featured</span>
-                <h2 className="font-display text-2xl text-[#2C1A0E] group-hover:text-brand-amber transition-colors mb-3 leading-snug">
-                  {featured.title}
-                </h2>
-                <p className="text-gray-500 text-sm leading-relaxed mb-5">{featured.excerpt}</p>
-                <div className="flex items-center gap-3 text-xs text-gray-400">
+            </div>
+
+            {/* Content */}
+            <div className="p-7 flex flex-col justify-center">
+              <h2 className="font-display text-xl md:text-2xl text-[#2C1A0E] group-hover:text-brand-amber transition-colors leading-snug mb-3">
+                {featured.title}
+              </h2>
+              <p className="text-gray-500 text-sm leading-relaxed mb-5 line-clamp-3">{featured.excerpt}</p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-full bg-brand-amber/20 flex items-center justify-center font-semibold text-brand-amber text-sm">
                     {featured.author[0]}
                   </div>
-                  <span className="text-gray-600 font-medium">{featured.author}</span>
-                  <span>·</span>
-                  <span>{formatDate(featured.publishedAt)}</span>
+                  <div>
+                    <p className="text-[#2C1A0E] text-xs font-medium">{featured.author}</p>
+                    <p className="text-gray-400 text-xs">{formatDate(featured.publishedAt)}</p>
+                  </div>
                 </div>
+                <span className="text-brand-amber text-xs font-medium group-hover:gap-2 transition-all">
+                  Read article →
+                </span>
               </div>
             </div>
           </div>
         </Link>
 
-        {/* Grid */}
-        <h2 className="font-display text-xl text-[#2C1A0E] mb-6">All Articles</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* ── All Articles grid ── */}
+        <p className="text-xs text-brand-amber font-medium tracking-widest uppercase mb-4">All Articles</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
           {rest.map(post => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="group bg-white rounded-2xl overflow-hidden border border-brand-amber/10 shadow-sm hover:shadow-md transition-shadow flex flex-col">
-              {/* Top accent */}
-              <div className="h-1.5 bg-gradient-to-r from-brand-amber to-[#8B5A2A]" />
-              <div className="p-6 flex flex-col flex-1">
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-700'}`}>
+            <Link
+              key={post.slug}
+              href={`/blog/${post.slug}`}
+              className="group bg-white rounded-xl border border-[#E8D9C4] hover:border-brand-amber/30 hover:shadow-md transition-all duration-200 flex flex-col overflow-hidden"
+            >
+              {/* Category header */}
+              <div className="bg-[#FBF7F0] border-b border-[#E8D9C4] px-4 py-3 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-brand-amber text-sm">{CATEGORY_ICONS[post.category] ?? '✦'}</span>
+                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-700'}`}>
                     {post.category}
                   </span>
-                  <span className="text-xs text-gray-400">{post.readTime} min</span>
                 </div>
-                <h3 className="font-display text-base text-[#2C1A0E] group-hover:text-brand-amber transition-colors leading-snug mb-2 flex-1">
+                <span className="text-xs text-gray-400">{post.readTime} min</span>
+              </div>
+
+              {/* Body */}
+              <div className="p-5 flex flex-col flex-1">
+                <h3 className="font-display text-[15px] text-[#2C1A0E] group-hover:text-brand-amber transition-colors leading-snug mb-2">
                   {post.title}
                 </h3>
-                <p className="text-xs text-gray-500 leading-relaxed line-clamp-3 mb-4">{post.excerpt}</p>
-                <div className="flex items-center gap-2 text-xs text-gray-400 mt-auto">
-                  <div className="w-6 h-6 rounded-full bg-brand-amber/15 flex items-center justify-center font-semibold text-brand-amber text-xs">
-                    {post.author[0]}
+                <p className="text-xs text-gray-500 leading-relaxed line-clamp-3 mb-4 flex-1">
+                  {post.excerpt}
+                </p>
+                <div className="flex items-center justify-between mt-auto pt-3 border-t border-[#F0E8DC]">
+                  <div className="flex items-center gap-2">
+                    <div className="w-5 h-5 rounded-full bg-brand-amber/15 flex items-center justify-center text-brand-amber text-[10px] font-bold">
+                      {post.author[0]}
+                    </div>
+                    <span className="text-xs text-gray-500">{post.author}</span>
                   </div>
-                  <span className="text-gray-600">{post.author}</span>
-                  <span className="ml-auto">{formatDate(post.publishedAt)}</span>
+                  <span className="text-[11px] text-gray-400">{formatDate(post.publishedAt)}</span>
                 </div>
               </div>
             </Link>
           ))}
         </div>
 
-        {/* CTA */}
-        <div className="mt-16 bg-brand-charcoal rounded-2xl p-10 text-center">
-          <p className="text-brand-amber text-sm font-medium tracking-widest uppercase mb-3">Begin Your Journey</p>
-          <h3 className="font-display text-2xl text-white mb-3">Ready to experience healing?</h3>
-          <p className="text-white/50 text-sm mb-6 max-w-md mx-auto">Book a Free Discovery Call with Hemavathi or Shruthi — no obligation, no cost.</p>
-          <Link href="/services/free-discovery-call" className="inline-block bg-brand-amber text-white text-sm font-medium rounded-full px-7 py-3 hover:bg-[#A36208] transition-colors">
-            Claim Your Free Session →
+        {/* ── Bottom CTA ── */}
+        <div className="bg-brand-charcoal rounded-2xl p-8 md:p-10 flex flex-col md:flex-row items-center gap-6 justify-between">
+          <div>
+            <p className="text-brand-amber text-xs font-medium tracking-widest uppercase mb-1">Begin Your Journey</p>
+            <h3 className="font-display text-2xl text-white mb-1">Ready to experience healing?</h3>
+            <p className="text-white/45 text-sm">Book a Free Discovery Call — no obligation, no cost.</p>
+          </div>
+          <Link
+            href="/services/free-discovery-call"
+            className="flex-shrink-0 bg-brand-amber text-white text-sm font-medium rounded-full px-7 py-3 hover:bg-[#A36208] transition-colors whitespace-nowrap"
+          >
+            Claim Free Session →
           </Link>
         </div>
       </div>
