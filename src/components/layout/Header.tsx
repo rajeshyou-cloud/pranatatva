@@ -27,8 +27,8 @@ export default function Header({ sidebarVisible = false }: { sidebarVisible?: bo
           <Image
             src="/Logo.png"
             alt="PranaTatva"
-            width={48}
-            height={44}
+            width={62}
+            height={57}
             style={{ objectFit: 'contain' }}
             priority
           />
