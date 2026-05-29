@@ -25,15 +25,14 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-[#FBF7F0]">
       {/* Hero */}
-      <div className="bg-brand-charcoal pt-10 pb-16 px-4">
+      <div className="bg-brand-charcoal pt-6 pb-8 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-brand-amber text-sm font-medium tracking-widest uppercase mb-3">PranaTatva Healing Journal</p>
-          <h1 className="font-display text-4xl md:text-5xl text-white mb-4">
-            Wisdom for the<br />
-            <span className="text-brand-amber italic">Inner Journey</span>
+          <p className="text-brand-amber text-xs font-medium tracking-widest uppercase mb-2">PranaTatva Healing Journal</p>
+          <h1 className="font-display text-3xl md:text-4xl text-white mb-2">
+            Wisdom for the <span className="text-brand-amber italic">Inner Journey</span>
           </h1>
-          <p className="text-white/55 text-base max-w-xl mx-auto leading-relaxed">
-            Practical insights on healing, sadhana, and spiritual growth from our practitioners — grounded in ancient wisdom, written for modern seekers.
+          <p className="text-white/50 text-sm max-w-xl mx-auto">
+            Insights on healing, sadhana, and spiritual growth — grounded in ancient wisdom, written for modern seekers.
           </p>
         </div>
       </div>

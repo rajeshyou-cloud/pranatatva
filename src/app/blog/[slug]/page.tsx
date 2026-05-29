@@ -38,40 +38,41 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
 
   return (
     <div className="min-h-screen bg-[#FBF7F0]">
-      {/* Header strip */}
-      <div className="bg-brand-charcoal pt-10 pb-14 px-4">
+      {/* Header strip — compact */}
+      <div className="bg-brand-charcoal pt-5 pb-6 px-4">
         <div className="max-w-3xl mx-auto">
-          <Link href="/blog" className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/70 text-sm mb-6 transition-colors">
+          <Link href="/blog" className="inline-flex items-center gap-1.5 text-white/40 hover:text-white/70 text-xs mb-3 transition-colors">
             ← Back to Journal
           </Link>
-          <div className="flex items-center gap-3 mb-4">
-            <span className={`text-xs font-medium px-2.5 py-1 rounded-full ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-700'}`}>
+          <div className="flex items-center gap-3 mb-2.5">
+            <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${CATEGORY_COLORS[post.category] ?? 'bg-gray-100 text-gray-700'}`}>
               {post.category}
             </span>
             <span className="text-white/30 text-xs">{post.readTime} min read</span>
           </div>
-          <h1 className="font-display text-3xl md:text-4xl text-white leading-snug mb-5">
+          <h1 className="font-display text-2xl md:text-3xl text-white leading-snug mb-3">
             {post.title}
           </h1>
-          <p className="text-white/50 text-base leading-relaxed mb-6">{post.excerpt}</p>
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-brand-amber/30 flex items-center justify-center font-semibold text-brand-amber">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-full bg-brand-amber/30 flex items-center justify-center font-semibold text-brand-amber text-sm">
               {post.author[0]}
             </div>
-            <div>
-              <p className="text-white text-sm font-medium">{post.author}</p>
-              <p className="text-white/40 text-xs">{post.authorRole} · {formatDate(post.publishedAt)}</p>
-            </div>
+            <p className="text-white/60 text-xs">{post.author} · {post.authorRole} · {formatDate(post.publishedAt)}</p>
           </div>
         </div>
       </div>
 
       {/* Article body */}
-      <div className="max-w-3xl mx-auto px-4 py-12">
+      <div className="max-w-3xl mx-auto px-4 py-8">
+        {/* Lead excerpt */}
+        <p className="text-[#5C3D28] text-base leading-relaxed border-l-4 border-brand-amber pl-4 mb-8 italic">
+          {post.excerpt}
+        </p>
+
         <article
           className="prose prose-lg max-w-none
             prose-headings:font-display prose-headings:text-[#2C1A0E]
-            prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+            prose-h2:text-xl prose-h2:mt-8 prose-h2:mb-3
             prose-p:text-gray-600 prose-p:leading-relaxed prose-p:text-[15px]
             prose-li:text-gray-600 prose-li:text-[15px]
             prose-strong:text-[#2C1A0E]
