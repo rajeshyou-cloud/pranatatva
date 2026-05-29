@@ -69,13 +69,12 @@ export default function BlogPage() {
             {/* Featured image panel */}
             <div className="relative min-h-[200px] md:min-h-0 overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=700&fit=crop&q=85"
+                src="/images/blog/theta_healing_images_animated_202605291238.jpeg"
                 alt={featured.title}
                 fill
-                sizes="260px"
                 className="object-cover object-center"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal via-brand-charcoal/55 to-brand-charcoal/10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-charcoal/90 via-brand-charcoal/30 to-transparent" />
               <div className="absolute bottom-5 left-0 right-0 flex flex-col items-center gap-1.5">
                 <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${CATEGORY_COLORS[featured.category] ?? 'bg-gray-100 text-gray-700'}`}>
                   {featured.category}
