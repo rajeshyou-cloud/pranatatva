@@ -7,6 +7,114 @@ export const metadata: Metadata = {
   description: 'Explore articles on Theta Healing, Akashic Records, Sadhana, manifestation, and spiritual awakening from the practitioners at PranaTatva.',
 }
 
+function CategoryVisual({ category }: { category: string }) {
+  const A = '#C4780A'   // amber
+  const AL = 'rgba(196,120,10,0.18)'
+  const AM = 'rgba(196,120,10,0.35)'
+
+  if (category === 'Healing Modalities') return (
+    // θ symbol + theta brainwave pattern
+    <svg viewBox="0 0 200 200" className="w-36 h-36" fill="none">
+      {/* Rings */}
+      <circle cx="100" cy="96" r="72" stroke={AL} strokeWidth="1" />
+      <circle cx="100" cy="96" r="50" stroke={AM} strokeWidth="1" />
+      {/* θ symbol */}
+      <text x="100" y="122" textAnchor="middle" fontSize="80" fill={A} fontFamily="Georgia,serif" opacity="0.92">θ</text>
+      {/* Theta brainwave — sinusoidal, slow frequency */}
+      <path d="M18,158 C28,144 38,172 48,158 C58,144 68,172 78,158 C88,144 98,172 108,158 C118,144 128,172 138,158 C148,144 158,172 168,158 C175,148 180,158 182,158"
+            stroke={A} strokeWidth="1.5" strokeLinecap="round" opacity="0.6" />
+      {/* Sparkles */}
+      <circle cx="34" cy="46" r="1.5" fill={A} opacity="0.5" />
+      <circle cx="166" cy="40" r="1" fill={A} opacity="0.4" />
+      <circle cx="172" cy="130" r="1.5" fill={A} opacity="0.4" />
+      <circle cx="28" cy="128" r="1" fill={A} opacity="0.3" />
+    </svg>
+  )
+
+  if (category === 'Soul Work') return (
+    // Akasha eye + stars + infinity
+    <svg viewBox="0 0 200 200" className="w-36 h-36" fill="none">
+      <circle cx="100" cy="100" r="72" stroke={AL} strokeWidth="1" />
+      {/* Eye shape */}
+      <path d="M40,100 Q100,48 160,100 Q100,152 40,100Z" stroke={A} strokeWidth="1.2" opacity="0.5" />
+      {/* Iris */}
+      <circle cx="100" cy="100" r="22" stroke={A} strokeWidth="1.2" opacity="0.7" />
+      <circle cx="100" cy="100" r="10" fill={A} opacity="0.5" />
+      <circle cx="106" cy="95" r="3" fill="white" opacity="0.3" />
+      {/* Stars */}
+      {[[38,52],[162,52],[38,148],[162,148],[100,30],[100,170]].map(([cx,cy],i) => (
+        <circle key={i} cx={cx} cy={cy} r="1.5" fill={A} opacity="0.45" />
+      ))}
+      {/* Infinity at base */}
+      <path d="M72,165 C72,158 82,158 100,165 C118,172 128,172 128,165 C128,158 118,158 100,165 C82,172 72,172 72,165Z"
+            stroke={A} strokeWidth="1.2" opacity="0.5" />
+    </svg>
+  )
+
+  if (category === 'Sadhana') return (
+    // OM symbol + sunrise rays
+    <svg viewBox="0 0 200 200" className="w-36 h-36" fill="none">
+      <circle cx="100" cy="100" r="72" stroke={AL} strokeWidth="1" />
+      {/* Sunrise rays */}
+      {[0,30,60,90,120,150,180,210,240,270,300,330].map((deg,i) => {
+        const r = (deg * Math.PI) / 180
+        return <line key={i} x1={100 + Math.cos(r)*38} y1={100 + Math.sin(r)*38}
+                     x2={100 + Math.cos(r)*62} y2={100 + Math.sin(r)*62}
+                     stroke={A} strokeWidth="1" opacity={i%2===0?'0.5':'0.25'} />
+      })}
+      {/* OM text */}
+      <text x="100" y="118" textAnchor="middle" fontSize="68" fill={A} fontFamily="Georgia,serif" opacity="0.9">ॐ</text>
+    </svg>
+  )
+
+  if (category === 'Manifestation') return (
+    // Golden spiral + radiating stars
+    <svg viewBox="0 0 200 200" className="w-36 h-36" fill="none">
+      <circle cx="100" cy="100" r="72" stroke={AL} strokeWidth="1" />
+      {/* Spiral approximation */}
+      <path d="M100,100 Q130,70 130,100 Q130,140 100,140 Q60,140 60,100 Q60,58 100,58 Q148,58 148,100 Q148,152 100,152"
+            stroke={A} strokeWidth="1.4" strokeLinecap="round" opacity="0.65" />
+      {/* Center dot */}
+      <circle cx="100" cy="100" r="4" fill={A} opacity="0.8" />
+      {/* Radiating stars */}
+      {[[40,40],[160,40],[40,160],[160,160],[100,28],[100,172],[28,100],[172,100]].map(([cx,cy],i) => (
+        <text key={i} x={cx} y={cy+4} textAnchor="middle" fontSize="10" fill={A} opacity="0.4">✦</text>
+      ))}
+    </svg>
+  )
+
+  if (category === 'Spiritual Growth') return (
+    // Ascending triangle + light rays
+    <svg viewBox="0 0 200 200" className="w-36 h-36" fill="none">
+      <circle cx="100" cy="100" r="72" stroke={AL} strokeWidth="1" />
+      {/* Triangle */}
+      <polygon points="100,42 148,148 52,148" stroke={A} strokeWidth="1.4" opacity="0.7" />
+      {/* Inner triangle */}
+      <polygon points="100,66 132,132 68,132" stroke={A} strokeWidth="1" opacity="0.35" />
+      {/* Rays from apex */}
+      {[-50,-30,-15,0,15,30,50].map((angle,i) => {
+        const r = ((angle - 90) * Math.PI) / 180
+        return <line key={i} x1="100" y1="42"
+                     x2={100 + Math.cos(r)*55} y2={42 + Math.sin(r)*55}
+                     stroke={A} strokeWidth="1" opacity={i===3?'0.5':'0.2'} />
+      })}
+      {/* Center eye */}
+      <circle cx="100" cy="114" r="6" stroke={A} strokeWidth="1" opacity="0.5" />
+      <circle cx="100" cy="114" r="2.5" fill={A} opacity="0.5" />
+    </svg>
+  )
+
+  // Default
+  return (
+    <svg viewBox="0 0 200 200" className="w-36 h-36" fill="none">
+      <circle cx="100" cy="100" r="72" stroke={AL} strokeWidth="1" />
+      <circle cx="100" cy="100" r="44" stroke={AM} strokeWidth="1" />
+      <circle cx="100" cy="100" r="18" fill={A} opacity="0.3" />
+      <circle cx="100" cy="100" r="6" fill={A} opacity="0.7" />
+    </svg>
+  )
+}
+
 const CATEGORY_COLORS: Record<string, string> = {
   'Healing Modalities': 'bg-amber-100 text-amber-800',
   'Soul Work':          'bg-purple-100 text-purple-800',
@@ -64,32 +172,14 @@ export default function BlogPage() {
         </div>
         <Link href={`/blog/${featured.slug}`} className="group block mb-12">
           <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-[#E8D9C4] hover:shadow-lg transition-all duration-300 md:grid md:grid-cols-[260px_1fr]">
-            {/* Decorative left panel */}
-            <div className="bg-brand-charcoal relative min-h-[180px] md:min-h-0 flex flex-col items-center justify-center p-8 overflow-hidden">
-              {/* Concentric circles */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-48 h-48 rounded-full border border-white/5" />
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full border border-white/8" />
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-16 h-16 rounded-full border border-brand-amber/20" />
-              </div>
-              {/* Lotus SVG */}
-              <svg viewBox="0 0 80 80" className="w-16 h-16 relative z-10" fill="none">
-                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.9" transform="rotate(0 40 40)" />
-                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.6" transform="rotate(45 40 40)" />
-                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.6" transform="rotate(-45 40 40)" />
-                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.35" transform="rotate(90 40 40)" />
-                <ellipse cx="40" cy="52" rx="8" ry="18" fill="#C4780A" opacity="0.35" transform="rotate(-90 40 40)" />
-                <circle cx="40" cy="40" r="5" fill="#E8A020" />
-              </svg>
-              <div className="relative z-10 mt-4 text-center">
+            {/* Decorative left panel — category-specific visual */}
+            <div className="bg-brand-charcoal relative min-h-[200px] md:min-h-0 flex flex-col items-center justify-center p-6 overflow-hidden">
+              <CategoryVisual category={featured.category} />
+              <div className="mt-3 text-center">
                 <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${CATEGORY_COLORS[featured.category] ?? 'bg-gray-100 text-gray-700'}`}>
                   {featured.category}
                 </span>
-                <p className="text-white/30 text-xs mt-2">{featured.readTime} min read</p>
+                <p className="text-white/30 text-xs mt-1.5">{featured.readTime} min read</p>
               </div>
             </div>
 
