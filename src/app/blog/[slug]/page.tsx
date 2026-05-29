@@ -103,7 +103,7 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
             <p className="text-xs text-gray-400 mb-2">{post.authorRole}</p>
             <p className="text-sm text-gray-500 leading-relaxed">
               {post.author === 'Hemavathi'
-                ? 'Hemavathi is a certified Theta Healing practitioner and spiritual guide with over a decade of experience in energy healing, ancestral clearing, and abundance work.'
+                ? 'Hemavathi is a certified Theta Healing practitioner, Certified NLP Practitioner, and spiritual guide with over 18 years of experience in energy healing, ancestral clearing, and abundance work.'
                 : 'Shruthi is a trained Tarot reader and Akashic Records practitioner who combines symbolic interpretation with soul-level insight to help clients find clarity and direction.'}
             </p>
           </div>

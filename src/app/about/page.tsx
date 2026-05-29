@@ -38,15 +38,15 @@ const practitioners = [
     initial: 'H',
     stats: [
       { val: '1,400+', lbl: 'Sessions Conducted' },
-      { val: '8+',     lbl: 'Years of Practice' },
+      { val: '18+',    lbl: 'Years of Practice' },
       { val: 'EN',     lbl: 'Language' },
     ],
     bio: [
-      'Hemavathi is a certified Theta Healing practitioner whose journey into energy medicine began over eight years ago through her own profound experience with ancestral healing. What started as a personal quest became a calling — to guide others through the subconscious layers that hold them back from the life they are meant to live.',
+      'Hemavathi is a certified Theta Healing practitioner and Certified NLP Practitioner whose journey into energy medicine began over 18 years ago through her own profound experience with ancestral healing. What started as a personal quest became a calling — to guide others through the subconscious layers that hold them back from the life they are meant to live.',
       'Her practice centres on Theta Healing, where she works directly with the theta brainwave state to identify and shift limiting beliefs at their root. She also facilitates Akashic Records readings — accessing the energetic blueprint of a soul\'s journey to bring clarity on relationships, life purpose, and karmic patterns.',
       'Hemavathi weaves Reiki and Manifestation coaching into her sessions, creating a holistic container that addresses the energetic, emotional, and intentional dimensions of healing. Clients often describe sessions with her as "deeply still yet quietly transformative."',
     ],
-    tags: ['Theta Healing', 'Akashic Records', 'Reiki', 'Manifestation', 'Belief Work', 'Ancestral Healing'],
+    tags: ['Theta Healing', 'Akashic Records', 'Certified NLP', 'Reiki', 'Manifestation', 'Belief Work', 'Ancestral Healing'],
     cta: 'Book with Hemavathi',
   },
   {
