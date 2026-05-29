@@ -159,47 +159,41 @@ create policy "Client can view own bookings" on bookings
 -- Service role (admin) has full access — handled via SUPABASE_SERVICE_ROLE_KEY
 
 -- ─── SEED DATA ───────────────────────────────────────────────────────────────
+-- Run this once against your Supabase project to populate real practitioners
+-- and services. Safe to re-run: uses ON CONFLICT DO NOTHING.
 
 insert into practitioners (name, slug, title, bio, specialties, languages) values
 (
-  'Lakshmmi',
-  'lakshmmi',
-  'Spiritual Healer & Manifestation Coach',
-  'With over a decade of experience in energy healing, Vedic astrology, and manifestation coaching, Lakshmmi guides seekers on a transformative journey toward inner peace and abundance.',
-  array['Energy Healing', 'Manifestation', 'Vedic Astrology', 'Past Life Regression'],
-  array['en', 'hi', 'te']
-);
+  'Hemavathi',
+  'hema',
+  'Founder · Master Theta Healing Practitioner · Certified NLP · Certified Instructor',
+  'The visionary behind PranaTatva, Hemavathi brings 18 years of practice and a master-level depth to every session. She specialises in dissolving deep-rooted limiting beliefs through Theta Healing and guiding seekers into lasting states of abundance, clarity, and spiritual alignment.',
+  array['Theta Healing', 'Manifestation', 'Spiritual Training', 'Reiki', 'NLP', 'Akashic Records', 'Ancestral Healing'],
+  array['en']
+),
+(
+  'Shruthi',
+  'shru',
+  'Healing Guide · Tarot Reader · Numerologist · EFT Practitioner',
+  'Shruthi''s relationship with Tarot began not as mysticism but as a mirror — a tool for honest self-inquiry refined into a precise, compassionate practice over six years. As a trained Numerologist and EFT practitioner she translates intuitive insight into tangible next steps.',
+  array['Tarot Reading', 'Numerology', 'EFT Tapping', 'Akashic Records', 'Chakra Balancing', 'Intuitive Guidance'],
+  array['en']
+)
+ON CONFLICT (slug) DO NOTHING;
 
-insert into services (slug, name, name_hi, name_te, description, category, duration_minutes, price_paise, session_type) values
-(
-  '1on1-healing-session',
-  '1:1 Healing Session',
-  'व्यक्तिगत हीलिंग सत्र',
-  'వ్యక్తిగత వైద్య సత్రం',
-  'A deeply personalised healing session addressing your unique energy blocks, emotional patterns, and life challenges. Includes chakra assessment and customised energy work.',
-  'healing', 60, 250000, '1on1'
-),
-(
-  'manifestation-coaching',
-  'Manifestation Coaching',
-  'अभिव्यक्ति कोचिंग',
-  'వ్యక్తీకరణ కోచింగ్',
-  'Learn the art and science of conscious creation. This session combines Vedic wisdom with modern manifestation techniques to align your energy with your desires.',
-  'manifestation', 60, 200000, '1on1'
-),
-(
-  'spiritual-consultation',
-  'Spiritual Consultation',
-  'आध्यात्मिक परामर्श',
-  'ఆధ్యాత్మిక సంప్రదింపు',
-  'A comprehensive spiritual guidance session covering your life path, karmic patterns, and actionable steps for growth. Suitable for anyone seeking clarity and direction.',
-  'consultation', 45, 150000, '1on1'
-),
-(
-  'group-healing-circle',
-  'Group Healing Circle',
-  'समूह हीलिंग सर्कल',
-  'సమూహ వైద్య మండలి',
-  'Join our monthly group healing circle — a sacred space for collective energy work, guided meditation, and shared healing. Limited to 12 participants.',
-  'healing', 90, 100000, 'group'
-);
+insert into services (slug, name, description, category, duration_minutes, price_paise, session_type) values
+('theta-healing-deep-dive',       'Theta Healing Deep Dive',              'Deep theta-state session to permanently dissolve limiting beliefs and energetic blocks.',                                         'healing',       60,  250000, '1on1'),
+('abundance-manifestation',       'Abundance Manifestation Session',      'Align your energy with abundance through Theta Healing and manifestation coaching.',                                            'manifestation', 75,  300000, '1on1'),
+('tarot-card-reading',            'Tarot Card Reading',                   'Intuitive Tarot readings that illuminate your path and offer clarity on love, career, and purpose.',                            'tarot',         45,  180000, '1on1'),
+('spiritual-awakening-mastery',   'Spiritual Awakening Mastery Program',  '8-week certification program for deep spiritual transformation and awakening.',                                                  'training',      0,  2200000,'1on1'),
+('akashic-records-soul-reading',  'Akashic Records Soul Reading',         'Access the energetic blueprint of your soul''s journey for clarity on relationships, life purpose, and karmic patterns.',       'akashic',       60,  220000, '1on1'),
+('vasthu-consultation',           'Vasthu Consultation',                  'Align your living or working space with Vasthu principles for harmony, prosperity, and positive energy flow.',                  'consultation',  60,   50000, '1on1'),
+('psychic-consultation',          'Psychic Consultation',                 'An intuitive session to gain clarity on life questions, relationships, and decisions through psychic guidance.',                 'consultation',  60,   50000, '1on1'),
+('akashic-consultation',          'Akashic Consultation',                 'Focused Akashic Records consultation to address specific life questions and soul-level patterns.',                               'akashic',       60,  150000, '1on1'),
+('akashic-readings',              'Akashic Readings',                     'In-depth Akashic Records reading — soul history, contracts, and future potentials.',                                            'akashic',       45,  510000, '1on1'),
+('tarot-reading',                 'Tarot Reading',                        'Comprehensive Tarot reading for guidance on life path, relationships, and career.',                                              'tarot',         45,  240000, '1on1'),
+('akashic-reading-course',        'Akashic Reading Course',               'Certification course to learn Akashic Records reading — access the Akashic field for yourself and others.',                    'course',        0,  1500000,'1on1'),
+('tarot-reading-course',          'Tarot Reading Course',                 'Certification course in Tarot reading — from foundational card meanings to intuitive reading practice.',                        'course',        0,  1500000,'1on1'),
+('numerology',                    'Numerology',                           'Decode your name and birth date to reveal life-path themes, soul urges, and the timing of significant transitions.',             'numerology',    0,   666600,'1on1'),
+('free-discovery-call',           'Free Discovery Call',                  'A complimentary 30-minute call to explore which healing modality is the right fit for your journey.',                           'consultation',  30,        0,'1on1')
+ON CONFLICT (slug) DO NOTHING;
