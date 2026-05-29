@@ -91,31 +91,33 @@ export async function POST(req: NextRequest) {
         .update({ status: 'confirmed' })
         .eq('booking_ref', booking.booking_ref)
 
-      console.log('[bookings/create] free booking confirmed, sending emails to:', body.clientEmail)
-      import('@/lib/email')
-        .then(({ sendBookingConfirmationEmail, sendPractitionerAlertEmail }) => {
-          const emailRecord = {
-            booking_ref: booking.booking_ref,
-            client_name: body.clientName,
-            client_email: body.clientEmail,
-            client_phone: body.clientPhone,
-            amount_paise: 0,
-            service_name: body.serviceName,
-            practitioner_name: body.practitionerName,
-            slot_date: body.slotDate,
-            slot_time: body.slotTime,
-            zoom_link: null,
-          }
-          console.log('[bookings/create] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY)
-          console.log('[bookings/create] EMAIL_FROM:', process.env.EMAIL_FROM)
-          sendBookingConfirmationEmail(emailRecord)
-            .then(() => console.log('[bookings/create] client email sent ok'))
-            .catch(e => console.error('[bookings/create] client email failed:', e))
-          sendPractitionerAlertEmail(emailRecord)
-            .then(() => console.log('[bookings/create] practitioner email sent ok'))
-            .catch(e => console.error('[bookings/create] practitioner email failed:', e))
-        })
-        .catch(e => console.error('[bookings/create] email import failed:', e))
+      const emailRecord = {
+        booking_ref: booking.booking_ref,
+        client_name: body.clientName,
+        client_email: body.clientEmail,
+        client_phone: body.clientPhone,
+        amount_paise: 0,
+        service_name: body.serviceName,
+        practitioner_name: body.practitionerName,
+        slot_date: body.slotDate,
+        slot_time: body.slotTime,
+        zoom_link: null,
+      }
+
+      console.log('[bookings/create] free booking confirmed, sending emails')
+      console.log('[bookings/create] RESEND_API_KEY present:', !!process.env.RESEND_API_KEY)
+      console.log('[bookings/create] EMAIL_FROM:', process.env.EMAIL_FROM)
+      console.log('[bookings/create] client email:', body.clientEmail, '| admin email:', process.env.ADMIN_EMAIL)
+
+      const { sendBookingConfirmationEmail, sendPractitionerAlertEmail } = await import('@/lib/email')
+      const [clientResult, adminResult] = await Promise.allSettled([
+        sendBookingConfirmationEmail(emailRecord),
+        sendPractitionerAlertEmail(emailRecord),
+      ])
+      if (clientResult.status === 'rejected') console.error('[bookings/create] client email failed:', clientResult.reason)
+      else console.log('[bookings/create] client email sent ok')
+      if (adminResult.status === 'rejected') console.error('[bookings/create] admin email failed:', adminResult.reason)
+      else console.log('[bookings/create] admin email sent ok')
 
       return NextResponse.json({ bookingRef: booking.booking_ref, orderId: 'free', keyId: null })
     }
