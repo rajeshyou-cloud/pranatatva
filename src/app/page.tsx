@@ -95,7 +95,7 @@ export default function HomePage() {
                 name: 'Hemavathi',
                 color: '#8B5A2A',
                 role: 'Certified Theta Healing Practitioner · Master Level · Manifestation Coach · Spiritual Trainer',
-                stats: '1,400+ sessions · 7 years of practice · Certified Instructor',
+                stats: '1,400+ sessions · 18 years of practice · Certified NLP · Certified Instructor',
                 specialties: ['Theta Healing', 'Manifestation', 'Spiritual Training'],
               },
               {

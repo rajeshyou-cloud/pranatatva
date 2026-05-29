@@ -153,7 +153,7 @@ export default function DesignBPage() {
           </div>
           <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(320px,1fr))', gap:'1.2rem' }}>
             {[
-              { name:'Hemavathi', init:'H', col:'#C4900A', role:'Certified Theta Healing Practitioner · Master Level · Manifestation Coach', stats:'1,400+ sessions · 7 years', spec:['Theta Healing','Manifestation','Spiritual Training'] },
+              { name:'Hemavathi', init:'H', col:'#C4900A', role:'Certified Theta Healing Practitioner · Master Level · Manifestation Coach', stats:'1,400+ sessions · 18 years · Certified NLP', spec:['Theta Healing','Manifestation','Spiritual Training'] },
               { name:'Shruthi', init:'S', col:'#9060B8', role:'Tarot Reader · Akashic Records Practitioner · Numerologist · Intuitive Channel', stats:'900+ readings · 5 years', spec:['Tarot','Akashic Records','Numerology'] },
             ].map(p => (
               <div key={p.name} className="card-cel" style={{ background:'rgba(255,255,255,.022)', border:'1px solid rgba(212,175,55,.13)', borderRadius:'18px', padding:'2rem', backdropFilter:'blur(10px)', display:'flex', gap:'1.2rem' }}>

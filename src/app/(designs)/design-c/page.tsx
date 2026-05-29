@@ -163,7 +163,7 @@ export default function DesignCPage() {
           </div>
           <div style={{ display:'flex', flexDirection:'column', gap:'0' }}>
             {[
-              { name:'Hemavathi', init:'H', color:'#C4900A', role:'Certified Theta Healing Practitioner · Master Level', bio:'Seven years of dedicated practice, 1,400+ sessions, and a rare gift for reaching the root of what holds you back.', spec:['Theta Healing','Manifestation','Spiritual Training'], stats:'1,400+ sessions · 7 years' },
+              { name:'Hemavathi', init:'H', color:'#C4900A', role:'Certified Theta Healing Practitioner · Master Level · Certified NLP', bio:'18 years of dedicated practice, 1,400+ sessions, and a rare gift for reaching the root of what holds you back.', spec:['Theta Healing','Manifestation','Spiritual Training'], stats:'1,400+ sessions · 18 years' },
               { name:'Shruthi', init:'S', color:'#6A3D8A', role:'Tarot Reader · Akashic Records Practitioner · Numerologist', bio:'A natural intuitive with 900+ readings across India, Shruthi offers clarity with compassion and extraordinary precision.', spec:['Tarot','Akashic Records','Numerology'], stats:'900+ readings · 5 years' },
             ].map((p, i) => (
               <div key={p.name} style={{ display:'grid', gridTemplateColumns:'80px 1fr auto', gap:'1.5rem', alignItems:'center', padding:'2.2rem 0', borderTop: i===0 ? '1px solid #E8E0D4' : undefined, borderBottom:'1px solid #E8E0D4' }}>
