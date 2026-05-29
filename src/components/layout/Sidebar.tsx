@@ -105,7 +105,10 @@ export default function Sidebar() {
             H
           </div>
           <div>
-            <div className="text-[11px]" style={{ color: 'rgba(245,239,228,0.68)' }}>Hemavathi</div>
+            <div className="flex items-center gap-1.5">
+              <span className="text-[11px]" style={{ color: 'rgba(245,239,228,0.68)' }}>Hemavathi</span>
+              <span className="text-[7px] uppercase tracking-widest px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(212,173,37,0.18)', color: '#D4AD25', border: '1px solid rgba(212,173,37,0.3)', letterSpacing: '0.14em' }}>Founder</span>
+            </div>
             <div className="text-[9px] leading-snug" style={{ color: 'rgba(245,239,228,0.32)' }}>Healing · Manifestation</div>
           </div>
         </div>

@@ -33,13 +33,14 @@ const values = [
 const practitioners = [
   {
     name: 'Hemavathi',
-    role: 'Theta Healing Practitioner & Akashic Records Guide',
+    badge: 'Founder & Lead Practitioner',
+    role: 'Master Theta Healing Practitioner · Certified NLP · Certified Instructor',
     accent: '#C4780A',
     initial: 'H',
     stats: [
       { val: '1,400+', lbl: 'Sessions Conducted' },
       { val: '18+',    lbl: 'Years of Practice' },
-      { val: 'EN',     lbl: 'Language' },
+      { val: 'NLP',    lbl: 'Certified' },
     ],
     bio: [
       'Hemavathi is a certified Theta Healing practitioner and Certified NLP Practitioner whose journey into energy medicine began over 18 years ago through her own profound experience with ancestral healing. What started as a personal quest became a calling — to guide others through the subconscious layers that hold them back from the life they are meant to live.',
@@ -51,8 +52,9 @@ const practitioners = [
   },
   {
     name: 'Shruthi',
-    role: 'Tarot Reader, Numerologist & EFT Practitioner',
-    accent: '#8B5A2A',
+    badge: 'Healing Guide',
+    role: 'Tarot Reader · Numerologist · EFT Practitioner · Akashic Records',
+    accent: '#6A3D8A',
     initial: 'S',
     stats: [
       { val: '900+',  lbl: 'Readings Given' },
@@ -106,7 +108,7 @@ export default function AboutPage() {
               <div style={{ order: idx % 2 === 0 ? 1 : 2 }}>
 
                 {/* Name & role */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '18px', marginBottom: '1.6rem' }}>
+                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '18px', marginBottom: '1.6rem' }}>
                   <div style={{
                     width: 64, height: 64, borderRadius: '50%',
                     background: `${p.accent}18`,
@@ -118,6 +120,9 @@ export default function AboutPage() {
                     {p.initial}
                   </div>
                   <div>
+                    <span style={{ display: 'inline-block', fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.18em', padding: '3px 10px', borderRadius: '100px', background: `${p.accent}12`, color: p.accent, border: `1px solid ${p.accent}30`, marginBottom: '6px', fontWeight: 600 }}>
+                      {p.badge}
+                    </span>
                     <h2 className="font-display" style={{ fontSize: '2rem', color: '#1A0C04', fontWeight: 500, lineHeight: 1 }}>{p.name}</h2>
                     <p style={{ fontSize: '13px', color: p.accent, marginTop: '5px', fontStyle: 'italic' }}>{p.role}</p>
                   </div>

@@ -89,46 +89,107 @@ export default function HomePage() {
               Gifted Healers, Sacred Space
             </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: '1.5rem' }}>
-            {[
-              {
-                name: 'Hemavathi',
-                color: '#8B5A2A',
-                role: 'Certified Theta Healing Practitioner · Master Level · Manifestation Coach · Spiritual Trainer',
-                stats: '1,400+ sessions · 18 years of practice · Certified NLP · Certified Instructor',
-                specialties: ['Theta Healing', 'Manifestation', 'Spiritual Training'],
-              },
-              {
-                name: 'Shruthi',
-                color: '#6A3D8A',
-                role: 'Tarot Reader · Akashic Records Practitioner · Numerologist',
-                stats: '900+ readings · 5 years of practice · Intuitive Channel',
-                specialties: ['Tarot', 'Akashic Records', 'Numerology'],
-              },
-            ].map(p => (
-              <div key={p.name} style={{ background: 'white', border: '1px solid #E8D9C4', borderRadius: '18px', padding: '1.6rem', display: 'flex', gap: '1.2rem' }}>
-                <div style={{
-                  width: 56, height: 56, borderRadius: '50%', flexShrink: 0,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--font-playfair)', fontSize: '22px',
-                  background: `${p.color}18`, color: p.color,
-                  border: `2px solid ${p.color}`,
-                }}>
-                  {p.name[0]}
-                </div>
-                <div>
-                  <h3 className="font-display" style={{ fontSize: '1.2rem', color: '#1A0E06', marginBottom: '0.3rem' }}>{p.name}</h3>
-                  <p style={{ fontSize: '11.5px', color: '#9C7A60', lineHeight: 1.6, marginBottom: '0.5rem' }}>{p.role}</p>
-                  <p style={{ fontSize: '11px', color: p.color }}>✦ {p.stats}</p>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '0.8rem' }}>
-                    {p.specialties.map(s => (
-                      <span key={s} style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '3px 10px', borderRadius: '4px', background: '#F5EFE4', color: '#5C3D28', border: '1px solid #E8D9C4' }}>{s}</span>
-                    ))}
-                  </div>
-                </div>
+
+          {/* ── Hemavathi — featured founder card ── */}
+          <div
+            className="flex flex-col md:flex-row"
+            style={{ background: 'white', border: '1px solid rgba(196,120,10,0.28)', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 6px 28px rgba(196,120,10,0.09)', marginBottom: '1.25rem' }}
+          >
+            {/* Left gradient panel */}
+            <div
+              className="flex-shrink-0 flex flex-col items-center justify-center gap-3 py-10 px-8 md:py-0"
+              style={{ background: 'linear-gradient(160deg,#3D1E04,#6B3A18,#4A2510)', minWidth: 210, position: 'relative' }}
+            >
+              {/* Ambient mandala */}
+              <svg width="160" height="160" viewBox="0 0 160 160" fill="none" style={{ position: 'absolute', opacity: 0.07, pointerEvents: 'none' }}>
+                <circle cx="80" cy="80" r="75" stroke="#D4AD25" strokeWidth="0.8"/>
+                <circle cx="80" cy="80" r="55" stroke="#D4AD25" strokeWidth="0.8" strokeDasharray="5 5"/>
+                <circle cx="80" cy="80" r="35" stroke="#D4AD25" strokeWidth="0.8"/>
+                <circle cx="80" cy="80" r="15" stroke="#D4AD25" strokeWidth="1"/>
+              </svg>
+
+              {/* Monogram */}
+              <div style={{ position: 'relative', width: 76, height: 76, borderRadius: '50%', background: 'rgba(196,120,10,0.18)', border: '2px solid rgba(212,173,37,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-playfair)', fontSize: '2.3rem', color: '#D4AD25' }}>
+                H
               </div>
-            ))}
+
+              {/* Founder badge */}
+              <span style={{ position: 'relative', fontSize: '8px', textTransform: 'uppercase', letterSpacing: '0.18em', padding: '4px 12px', borderRadius: '100px', background: 'rgba(212,173,37,0.16)', color: '#D4AD25', border: '1px solid rgba(212,173,37,0.32)' }}>
+                ✦ Founder
+              </span>
+
+              {/* Sessions count */}
+              <div style={{ position: 'relative', textAlign: 'center' }}>
+                <div style={{ fontFamily: 'var(--font-playfair)', fontSize: '1.5rem', color: '#F5EFE4', fontWeight: 600, lineHeight: 1 }}>1,400+</div>
+                <div style={{ fontSize: '9px', color: 'rgba(245,239,228,0.42)', textTransform: 'uppercase', letterSpacing: '0.1em', marginTop: 3 }}>Sessions</div>
+              </div>
+            </div>
+
+            {/* Right content */}
+            <div style={{ padding: '1.8rem 2rem', flex: 1 }}>
+              <div style={{ marginBottom: '0.3rem' }}>
+                <span style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.18em', color: '#C4780A', fontWeight: 600 }}>
+                  Founder & Lead Practitioner
+                </span>
+              </div>
+              <h3 className="font-display" style={{ fontSize: '1.8rem', color: '#1A0E06', fontWeight: 400, lineHeight: 1, marginBottom: '0.5rem' }}>
+                Hemavathi
+              </h3>
+              <p style={{ fontSize: '11.5px', color: '#9C7A60', fontStyle: 'italic', marginBottom: '1rem' }}>
+                Certified Theta Healing Practitioner · Master Level · Certified NLP · Certified Instructor
+              </p>
+              <p style={{ fontSize: '12.5px', color: '#5C3D28', lineHeight: 1.85, marginBottom: '1.2rem' }}>
+                The visionary behind PranaTatva, Hemavathi brings 18 years of practice and a master-level depth to every session.
+                She specialises in dissolving deep-rooted limiting beliefs through Theta Healing and guiding seekers into lasting
+                states of abundance, clarity, and spiritual alignment.
+              </p>
+
+              {/* Stats row */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', paddingTop: '1rem', marginBottom: '1.1rem', borderTop: '1px solid #E8D9C4' }}>
+                {[
+                  { val: '18 yrs', lbl: 'Practice' },
+                  { val: 'NLP', lbl: 'Certified' },
+                  { val: 'Instructor', lbl: 'Certified' },
+                  { val: '5★', lbl: 'Client rating' },
+                ].map(s => (
+                  <div key={s.lbl}>
+                    <div style={{ fontFamily: 'var(--font-playfair)', fontSize: '1.05rem', color: '#C4780A', fontWeight: 600, lineHeight: 1 }}>{s.val}</div>
+                    <div style={{ fontSize: '9px', color: '#9C7A60', textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 3 }}>{s.lbl}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Specialties */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+                {['Theta Healing', 'Manifestation', 'Spiritual Training', 'Reiki', 'NLP', 'Akashic Records'].map(tag => (
+                  <span key={tag} style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '3px 10px', borderRadius: '4px', background: 'rgba(196,120,10,0.08)', color: '#8B4A10', border: '1px solid rgba(196,120,10,0.14)' }}>{tag}</span>
+                ))}
+              </div>
+            </div>
           </div>
+
+          {/* ── Shruthi — associate practitioner card ── */}
+          <div style={{ background: 'white', border: '1px solid #E8D9C4', borderRadius: '18px', padding: '1.5rem 1.6rem', display: 'flex', gap: '1.2rem', alignItems: 'flex-start' }}>
+            <div style={{ width: 50, height: 50, borderRadius: '50%', flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--font-playfair)', fontSize: '20px', background: '#6A3D8A18', color: '#6A3D8A', border: '2px solid #6A3D8A40' }}>
+              S
+            </div>
+            <div>
+              <div style={{ fontSize: '9px', textTransform: 'uppercase', letterSpacing: '0.16em', color: '#6A3D8A', fontWeight: 600, marginBottom: '2px' }}>
+                Healing Guide
+              </div>
+              <h3 className="font-display" style={{ fontSize: '1.2rem', color: '#1A0E06', marginBottom: '0.3rem' }}>Shruthi</h3>
+              <p style={{ fontSize: '11.5px', color: '#9C7A60', lineHeight: 1.6, marginBottom: '0.5rem' }}>
+                Tarot Reader · Akashic Records Practitioner · Numerologist · EFT Practitioner
+              </p>
+              <p style={{ fontSize: '11px', color: '#6A3D8A' }}>✦ 900+ readings · 6 years of practice · Intuitive Channel</p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px', marginTop: '0.8rem' }}>
+                {['Tarot', 'Akashic Records', 'Numerology', 'EFT', 'Chakra Balancing'].map(s => (
+                  <span key={s} style={{ fontSize: '10px', textTransform: 'uppercase', letterSpacing: '0.08em', padding: '3px 10px', borderRadius: '4px', background: '#F5EFE4', color: '#5C3D28', border: '1px solid #E8D9C4' }}>{s}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
